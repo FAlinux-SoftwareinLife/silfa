@@ -9,9 +9,8 @@ package manager.screen {
 	 */
 	public interface IScreen {
 
-		function reset():void;
 		function get name():String;
-		//function setMediator():void;
+		function reset():void;
 
 	}
 

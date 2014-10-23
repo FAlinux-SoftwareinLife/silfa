@@ -1,48 +1,54 @@
 package screen.web {
 
-	import flash.events.Event;
-	import flash.media.StageWebView;
+	import identifier.ScreenName;
 
 	import manager.screen.IScreen;
 
-	import screen.ScreenFrame;
+	import frame.ScreenFrame;
+	import screen.web.view.DriveCalendarView;
+	import screen.web.view.GmailView;
+	import screen.web.view.LoginView;
+	import abstracts.WebViewAbstract;
 
+	/**
+	 * Shows the Web page. Activate the 'StageWebView'.
+	 *
+	 */
 	public class WebMediator extends ScreenFrame implements IScreen {
 
-		private const SCREEN_NAME:String = "web";
+		private const SCREEN_NAME:String = ScreenName.WEB;
 
-		private var sw:StageWebView
+		private const WEB_VIEW_LIST:Vector.<WebViewAbstract> = Vector.<WebViewAbstract>([
+
+			new LoginView(), new GmailView(), new DriveCalendarView()
+
+			]);
 
 		public function WebMediator() {
-
-			init();
-
-		}
-
-		private function init():void {
 
 		}
 
 		public function reset():void {
+
 		}
 
 		public function get name():String {
 			return SCREEN_NAME;
 		}
 
-		public function setWebView(urlOpen:Boolean, source:String):void {
+		public function set view(obj:Object):void {
 
-			sw = webview as StageWebView;
-
-			sw.addEventListener(Event.COMPLETE, loadCompleteHandler);
-
-			sw[urlOpen ? "loadURL" : "loadString"](source);
+			for each (var _view:WebViewAbstract in WEB_VIEW_LIST)
+				if (_view.name == obj.name)
+					_view.openWebView(obj.url);
 
 		}
 
-		private function loadCompleteHandler(evt:Event):void {
+		public function set closeView(obj:Object):void {
 
-
+			for each (var _view:WebViewAbstract in WEB_VIEW_LIST)
+				if (_view.name == obj.name)
+					_view.offWebview();
 
 		}
 

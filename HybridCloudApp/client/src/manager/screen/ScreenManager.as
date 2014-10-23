@@ -2,11 +2,9 @@ package manager.screen {
 
 	/**
 	 *
-	 * @author Softwareinlife inc.
 	 * Screen mediator manager.
 	 *
 	 */
-
 	public class ScreenManager {
 
 		private static var screenManager:ScreenManager;
@@ -30,14 +28,28 @@ package manager.screen {
 			screenList.push(_obj);
 
 		}
-
+		
+		/**
+		 * Remove screen in 'screenList' instance.
+		 * @param screen Screen instance;
+		 * 
+		 */
 		public function removeMediator(screen:IScreen):void {
-
+			
+			var _list_num:int = screenList.length;
+			
+			for (var i:uint = 0; i < _list_num; i++) {
+				
+				var _obj:Object = screenList[i];
+				
+				if (screen == _obj.screen)
+					screenList.splice(i, 1);
+				
+			}
 
 		}
 
 		/**
-		 *
 		 * @param name
 		 * @return Select screen mediator;
 		 *
@@ -67,7 +79,6 @@ package manager.screen {
 		}
 
 		/**
-		 *
 		 * Get ScreenManager instance.
 		 * @return Instance ScreenManager.
 		 *
@@ -87,7 +98,6 @@ package manager.screen {
 }
 
 /**
- * @author mini
  * 'ScreenManager' is not possible to create an instance.
  *
  */

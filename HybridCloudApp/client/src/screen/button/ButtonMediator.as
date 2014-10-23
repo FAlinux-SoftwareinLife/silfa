@@ -1,40 +1,68 @@
 package screen.button {
 
 	import flash.display.MovieClip;
-	import flash.events.MouseEvent;
-
-	import manager.model.ModelManager;
+	
+	import frame.ScreenFrame;
+	
+	import identifier.ButtonName;
+	import identifier.ScreenName;
+	
 	import manager.screen.IScreen;
-
-	import model.google.oauth.GoogleOAuthData;
-
-	import screen.ScreenFrame;
+	
+	import screen.button.auth.GetUserProfileButton;
+	import screen.button.auth.LoginButton;
+	import screen.button.auth.RPDriveCalendarButton;
+	import screen.button.auth.RPGmailButton;
+	import screen.button.auth.RefreshTokenButton;
+	import screen.button.drive.CreateDocButton;
+	import screen.button.drive.CreatePreButton;
+	import screen.button.drive.CreateSprButton;
+	import screen.button.drive.GetFileListButton;
 
 	/**
 	 *
-	 * @author mini
 	 * Test Button Group.
 	 *
 	 */
 	public class ButtonMediator extends ScreenFrame implements IScreen {
 
-		private const SCREEN_NAME:String = "button";
+		private const SCREEN_NAME:String = ScreenName.BUTTON;
 
-		private const buttonArea:MovieClip = testbtn_area;
+		private const buttonArea:MovieClip = button_area;
 
-		private var buttonGroupList:Vector.<Object>;
+		private const BUTTON_GROUP_LIST:Vector.<Object> = Vector.<Object>([
+
+			{name: ButtonName.AUTH, buttonList: [
+
+					{name: ButtonName.LOGIN, button: LoginButton},
+
+					{name: ButtonName.RP_GMAIL, button: RPGmailButton},
+
+					{name: ButtonName.RP_DRIVE_CALENDAR, button: RPDriveCalendarButton},
+
+					{name: ButtonName.REFRESH_TOKEN, button: RefreshTokenButton},
+					
+					{name: ButtonName.GET_USER_PROFILE, button: GetUserProfileButton}
+
+				]},
+
+			{name: ButtonName.DRIVE, buttonList: [
+
+					{name: ButtonName.GET_FILE_LIST, button: GetFileListButton},
+
+					{name: ButtonName.CREATE_DOC, button: CreateDocButton},
+
+					{name: ButtonName.CREATE_SPR, button: CreateSprButton},
+
+					{name: ButtonName.CREATE_PRE, button: CreatePreButton}
+
+				]}
+
+			]);
 
 		public function ButtonMediator() {
 
 			super();
-
-			buttonGroupList = Vector.<Object>([
-
-				{name: "auth", list: ["login", "rpGmail", "rpDriveCalendar", "refreshToken"]},
-
-				{name: "drive", list: ["getFilelist", "createDoc", "createSpr", "createPre"]}
-
-				]);
 
 			init();
 
@@ -56,48 +84,26 @@ package screen.button {
 		 */
 		private function initBtn():void {
 
-			var group_num:uint = buttonGroupList.length;
+			var _groupNum:uint = BUTTON_GROUP_LIST.length;
 
-			for (var i:uint = 0; i < group_num; i++) {
+			for each (var _buttonGroupObj:Object in BUTTON_GROUP_LIST) {
 
-				var buttonGroup:Object = buttonGroupList[i] as Object;
+				var _groupName:String = _buttonGroupObj.name as String;
+				var _buttonList:Vector.<Object> = Vector.<Object>(_buttonGroupObj.buttonList);
 
+				var _groupArea:MovieClip = buttonArea.getChildByName(_groupName + "BtnArea") as MovieClip;
 
-				var group_name:String = buttonGroup.name as String;
-				var button_list:Vector.<String> = Vector.<String>(buttonGroup.list);
-				var button_num:uint = button_list.length;
+				for each (var _buttonObj:Object in _buttonList) {
 
-				var groupArea:MovieClip = buttonArea.getChildByName(group_name + "BtnArea") as MovieClip;
+					var _buttonName:String = _buttonObj.name;
+					var _ButtonClass:Class = _buttonObj.button as Class;
+					var _button:MovieClip = _groupArea.getChildByName(_buttonName + "Btn") as MovieClip;
 
-				for (var j:uint = 0; j < button_num; j++) {
-
-					var btn_name:String = button_list[j];
-					var btn:MovieClip = groupArea.getChildByName(btn_name + "Btn") as MovieClip;
-
-					btn.buttonMode = true;
-					btn.mouseChildren = false;
-					btn.addEventListener(MouseEvent.MOUSE_DOWN, btnMouseHandler);
+					new _ButtonClass(_buttonName, _button);
 
 				}
 
 			}
-
-		}
-
-		private function btnMouseHandler(evt:MouseEvent):void {
-
-			switch (evt.type) {
-
-				case "mouseDown":
-
-					var _oauthData:GoogleOAuthData = ModelManager.modelManagerObj.getData("oauth") as GoogleOAuthData;
-
-					trace(_oauthData.authInfo);
-
-					break;
-
-			}
-
 		}
 
 		public function reset():void {
@@ -109,6 +115,10 @@ package screen.button {
 
 			return SCREEN_NAME;
 
+		}
+		
+		public function set view(obj:Object):void {
+			
 		}
 
 	}

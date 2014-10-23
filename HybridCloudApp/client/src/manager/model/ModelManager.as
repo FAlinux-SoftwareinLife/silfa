@@ -2,12 +2,9 @@ package manager.model {
 
 	/**
 	 *
-	 * @author mini
-	 *
 	 * Model manager.
 	 *
 	 */
-
 	public class ModelManager {
 
 		private static var modelManager:ModelManager;
@@ -15,7 +12,7 @@ package manager.model {
 		private var modelList:Vector.<Object>;
 
 		public function ModelManager(blockModelManager:BlockModelManager) {
-			
+
 			modelList = new Vector.<Object>();
 
 		}
@@ -25,35 +22,49 @@ package manager.model {
 		 * @param data Data instance.
 		 *
 		 */
-		public function addData(data:IModel):void {
+		public function addProxy(proxy:IModel):void {
 
-			var _obj:Object = {name: data.name, model: data};
+			var _obj:Object = {name: proxy.name, model: proxy};
 			modelList.push(_obj);
 
 		}
 
-		public function removeData(data:IModel):void {
+		/**
+		 * Remove data in 'modelList' instance.
+		 * @param data Data instance;
+		 * 
+		 */
+		public function removeProxy(data:IModel):void {
 
+			var _list_num:int = modelList.length;
+			
+			for (var i:uint = 0; i < _list_num; i++) {
+
+				var _obj:Object = modelList[i];
+
+				if (data == _obj.model)
+					modelList.splice(i, 1);
+
+			}
 
 		}
 
 		/**
-		 *
 		 * @param name
 		 * @return Select model data.
 		 *
 		 */
-		public function getData(name:String):IModel {
+		public function getProxy(name:String):IModel {
 
-			var _data:IModel;
+			var _proxy:IModel;
 
 			for each (var obj:Object in modelList) {
 
 				if (name == obj.name)
-					_data = obj.model;
+					_proxy = obj.model;
 			}
 
-			return _data;
+			return _proxy;
 
 		}
 
@@ -64,7 +75,6 @@ package manager.model {
 		}
 
 		/**
-		 *
 		 * Get ModelManager instance.
 		 * @return Instance ModelManager.
 		 *
@@ -85,7 +95,6 @@ package manager.model {
 
 /**
  *'ModelManager' is not possible to create an instance.
- * @author mini
  *
  */
 class BlockModelManager {
