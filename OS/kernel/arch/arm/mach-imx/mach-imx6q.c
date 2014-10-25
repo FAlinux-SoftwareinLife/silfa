@@ -129,13 +129,10 @@ static iomux_v3_cfg_t imx6q_sabrelite_pads[] = {
 	/* USB OTG power pin */
 	MX6Q_PAD_EIM_D22__GPIO_3_22,
 
-#if 0	//falinux removed
-	MX6Q_PAD_SD3_DAT7__UART1_TXD,
-	MX6Q_PAD_SD3_DAT6__UART1_RXD,
-#else
+	// 2014.10.25 UART Pin, [FALinux]
 	MX6Q_PAD_CSI0_DAT11__UART1_RXD, 
-        MX6Q_PAD_CSI0_DAT10__UART1_TXD,
-#endif
+    MX6Q_PAD_CSI0_DAT10__UART1_TXD,
+
 };
 
 /* For imx6q sabrelite board: set KSZ9021RN RGMII pad skew */
@@ -298,7 +295,7 @@ void led_blink_off()
 	led_trigger_set(ledblink_dev,NULL);
 }
 EXPORT_SIMBOL(led_blink_off);
-
+/* [FALinux] 2014.10.25 removed debug function....
 #if 0
 static int __init falinux_late_call(void)
 {	
@@ -317,8 +314,8 @@ static int __init falinux_late_call(void)
 	pr_err("falinux_late_call \n");
 }
 device_initcall(falinux_late_call);
-#endif 
-
+#endif
+*/ 
 #define RESET_GPIO		IMX_GPIO_NR( 7, 11 ) 
 void imx6q_restart(char mode, const char *cmd)
 {
