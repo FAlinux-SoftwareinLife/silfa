@@ -1,14 +1,14 @@
 package controller.apps {
 
 	import controller.apps.command.DocCommand;
-	import controller.apps.command.ListCommand;
+	import controller.apps.command.DriveListCommand;
 	import controller.apps.command.PresentCommand;
 	import controller.apps.command.ProfileCommand;
 	import controller.apps.command.SpreadCommand;
-	
+
 	import identifier.CommandName;
 	import identifier.ControllerName;
-	
+
 	import manager.controller.ICommand;
 	import manager.controller.IController;
 
@@ -18,7 +18,7 @@ package controller.apps {
 
 		private var APP_COMMAND_LIST:Vector.<ICommand> = Vector.<ICommand>([
 
-			new ProfileCommand, new ListCommand, new DocCommand, new SpreadCommand, new PresentCommand
+			new ProfileCommand, new DriveListCommand, new DocCommand, new SpreadCommand, new PresentCommand
 
 			]);
 
@@ -42,29 +42,29 @@ package controller.apps {
 					getCommand(CommandName.PROFILE).execute();
 
 					break;
-				
+
 				case "getFileList":
-					
-					getCommand(CommandName.LIST).execute();
-					
+
+					getCommand(CommandName.DRIVE_LIST).execute();
+
 					break;
-				
+
 				case "createDoc":
-					
+
 					getCommand(CommandName.DOC).execute();
-					
+
 					break;
-				
+
 				case "createSpr":
-					
+
 					getCommand(CommandName.SPREAD).execute();
-					
+
 					break;
-				
+
 				case "createPre":
-					
+
 					getCommand(CommandName.PRESENT).execute();
-					
+
 					break;
 
 			}

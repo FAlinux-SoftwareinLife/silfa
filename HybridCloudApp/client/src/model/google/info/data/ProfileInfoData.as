@@ -58,30 +58,6 @@ package model.google.info.data {
 
 		public function parseData(data:Object):void {
 
-			for (var i:Object in data) {
-
-				var _subObj:Object = data[i];
-
-				trace(i + " = " + _subObj);
-
-				for (var j:Object in _subObj) {
-
-					var _trdObj:Object = _subObj[j];
-
-					trace(j + " = " + _trdObj);
-
-					for (var h:Object in _trdObj) {
-
-						var _fourthObj:Object = _trdObj[h];
-
-						trace(h + " = " + _fourthObj);
-
-					}
-
-				}
-
-			}
-
 			profileInfoObj.circledByCount = data.circledByCount;
 			profileInfoObj.gender = data.gender;
 			profileInfoObj.isPlusUser = data.isPlusUser;
@@ -96,8 +72,6 @@ package model.google.info.data {
 			profileInfoObj.language = data.language;
 			profileInfoObj.id = data.id;
 			profileInfoObj.plusURL = data.url;
-
-
 
 		}
 

@@ -7,6 +7,7 @@ package model.google.info {
 	import manager.model.IData;
 	import manager.model.IModel;
 
+	import model.google.info.data.DriveListInfoData;
 	import model.google.info.data.OAuthInfoData;
 	import model.google.info.data.ProfileInfoData;
 
@@ -16,7 +17,7 @@ package model.google.info {
 
 		private const INFO_DATA_LIST:Vector.<IData> = Vector.<IData>([
 
-			new OAuthInfoData, new ProfileInfoData
+			new OAuthInfoData, new ProfileInfoData, new DriveListInfoData
 
 			]);
 

@@ -12,11 +12,8 @@ package screen.application {
 
 	import manager.screen.IScreen;
 
-	import screen.application.doc.DocApplication;
-	import screen.application.list.ListApplication;
-	import screen.application.present.PresentApplication;
+	import screen.application.drive.DriveApplication;
 	import screen.application.profile.ProfileApplication;
-	import screen.application.spread.SpreadApplication;
 
 	/**
 	 * Application layout.
@@ -28,7 +25,7 @@ package screen.application {
 
 		private const APPLICATION_LIST:Vector.<ApplicationAbstract> = Vector.<ApplicationAbstract>([
 
-			new ProfileApplication, new ListApplication, new DocApplication, new SpreadApplication, new PresentApplication
+			new ProfileApplication, new DriveApplication
 
 			]);
 
@@ -36,12 +33,17 @@ package screen.application {
 		private var nextApp:String;
 
 		public function ApplicationMediator() {
+
 			super();
+
 			init();
+
 		}
 
 		private function init():void {
+
 			initApp();
+
 		}
 
 		private function initApp():void {
@@ -50,12 +52,12 @@ package screen.application {
 
 				var _contentArea:MovieClip = app_area.getChildByName("contentArea") as MovieClip;
 				var _appArea:MovieClip = _contentArea.getChildByName(_app.name + "Area") as MovieClip;
-				
+
 				_app.addEventListener(MotionEvent.IN_MOTION_FINISHED, inMotionFinishedHandler);
 				_app.addEventListener(MotionEvent.OUT_MOTION_FINISHED, outMotionFinishedHandler);
 
 				_app.init(_appArea);
-				
+
 			}
 
 		}
@@ -73,7 +75,10 @@ package screen.application {
 		public function setApp(appName:String):void {
 
 			nextApp = appName;
-
+			
+			trace("appName = " + appName);
+			trace("currentApp = " + currentApp);
+			
 			currentApp != null ? exit() : start();
 
 		}
@@ -102,14 +107,18 @@ package screen.application {
 		}
 
 		private function inMotionFinishedHandler(evt:MotionEvent):void {
+			
 			trace(this, evt);
+			
 			currentApp = nextApp;
 			nextApp = null;
 
 		}
 
 		private function outMotionFinishedHandler(evt:MotionEvent):void {
+			
 			trace(this, evt);
+			
 			currentApp = null;
 
 			if (nextApp != null)

@@ -18,15 +18,21 @@ package abstracts {
 		
 		}
 		
-		protected function get headerName():String {
+		protected function get headerNameAuth():String {
 		
-			return GoogleHTTPRequestInfo.HEADER_NAME;
+			return GoogleHTTPRequestInfo.HEADER_NAME_AUTH;
 		
 		}
 		
-		protected function get headerValue():String {
+		protected function get headerValueAuth():String {
 			
-			return GoogleHTTPRequestInfo.HEADER_VALUE;
+			return GoogleHTTPRequestInfo.HEADER_VALUE_AUTH;
+			
+		}
+		
+		protected function get driveListURL():String {
+			
+			return GoogleHTTPRequestInfo.DRIVE_LIST;
 			
 		}
 		

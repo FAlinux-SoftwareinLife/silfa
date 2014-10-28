@@ -10,6 +10,7 @@ package model.google.apps {
 	import manager.model.IData;
 	import manager.model.IModel;
 
+	import model.google.apps.data.DriveListData;
 	import model.google.apps.data.ProfileData;
 
 	public class GoogleAppsProxy extends ModelProxyAbstract implements IModel {
@@ -18,7 +19,7 @@ package model.google.apps {
 
 		private const APPS_LIST:Vector.<Object> = Vector.<Object>([
 
-			new ProfileData
+			new ProfileData, new DriveListData
 
 			]);
 
@@ -58,6 +59,12 @@ package model.google.apps {
 				case DataName.PROFILE:
 
 					dispatchEvent(new AppsEvent(AppsEvent.REQUEST_PROFILE_COMPLETE, result));
+
+					break;
+
+				case DataName.DRIVE_LIST:
+
+					dispatchEvent(new AppsEvent(AppsEvent.REQUEST_DRIVE_LIST_COMPLETE, result));
 
 					break;
 

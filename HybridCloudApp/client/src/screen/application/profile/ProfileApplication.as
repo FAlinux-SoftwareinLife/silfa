@@ -3,12 +3,10 @@ package screen.application.profile {
 
 	import com.greensock.TweenNano;
 	import com.greensock.easing.Back;
-	import com.greensock.easing.BackOut;
 	import com.greensock.easing.Sine;
 
 	import flash.display.Bitmap;
 	import flash.display.Loader;
-	import flash.display.LoaderInfo;
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.net.URLRequest;
@@ -146,6 +144,8 @@ package screen.application.profile {
 
 			}
 
+			TweenNano.to(appArea, 1, {alpha: 1, ease: Sine.easeOut});
+
 		}
 
 		private function outMotion():void {
@@ -176,11 +176,14 @@ package screen.application.profile {
 			startMotion();
 
 		}
-		
+
 		private function startMotionCompleteCheck(num:uint):void {
-			
-			trace(num);
-			
+
+			var _areaNum:uint = area_list.length;
+
+			if (_areaNum == (num + 1))
+				startMotionComplete();
+
 		}
 
 		private function startMotionComplete():void {
@@ -190,6 +193,8 @@ package screen.application.profile {
 		}
 
 		private function outMotionComplete():void {
+
+			appArea.visible = false;
 
 			outMotionFinished();
 

@@ -10,7 +10,7 @@ package identifier {
 		public static const INFO:String = "info";
 		
 		public static const PROFILE:String = "profile";		
-		public static const LIST:String = "list";		
+		public static const DRIVE_LIST:String = "driveList";		
 		public static const DOC:String = "doc";		
 		public static const SPREAD:String = "spread";		
 		public static const PRESENT:String = "present";

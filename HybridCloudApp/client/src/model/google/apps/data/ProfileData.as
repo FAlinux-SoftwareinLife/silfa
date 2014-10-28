@@ -36,7 +36,7 @@ package model.google.apps.data {
 		}
 
 		public function requestData():void {
-			trace(this);
+			
 			requestProfileData();
 
 		}
@@ -51,8 +51,8 @@ package model.google.apps.data {
 			_token = oauthInfoDataObj.getAccessToken();
 
 			_header = new URLRequestHeader();
-			_header.name = headerName;
-			_header.value = headerValue + _token;
+			_header.name = headerNameAuth;
+			_header.value = headerValueAuth + _token;
 
 			_request = new URLRequest();
 			_request.url = profileURL;
