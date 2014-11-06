@@ -10,16 +10,20 @@ package model.google.apps {
 	import manager.model.IData;
 	import manager.model.IModel;
 
+	import model.google.apps.data.DocFileData;
+	import model.google.apps.data.DriveFileTrashData;
 	import model.google.apps.data.DriveListData;
+	import model.google.apps.data.PreFileData;
 	import model.google.apps.data.ProfileData;
+	import model.google.apps.data.SprFileData;
 
 	public class GoogleAppsProxy extends ModelProxyAbstract implements IModel {
 
 		private const MODEL_NAME:String = ProxyName.GOOGLE_APPS;
 
-		private const APPS_LIST:Vector.<Object> = Vector.<Object>([
+		private const APPS_DATA_LIST:Vector.<Object> = Vector.<Object>([
 
-			new ProfileData, new DriveListData
+			new ProfileData, new DriveListData, new DriveFileTrashData, new DocFileData, new SprFileData, new PreFileData
 
 			]);
 
@@ -40,7 +44,7 @@ package model.google.apps {
 		 */
 		public function requestData(name:String):void {
 
-			for each (var _data:IData in APPS_LIST)
+			for each (var _data:IData in APPS_DATA_LIST)
 				if (name == _data.name)
 					_data.requestData();
 
@@ -68,11 +72,39 @@ package model.google.apps {
 
 					break;
 
+				case DataName.DRIVE_FILE_TRASH:
+
+					dispatchEvent(new AppsEvent(AppsEvent.DRIVE_FILE_TRASH_COMPLETE, result.data));
+
+					break;
+
+				case DataName.DOC_FILE:
+
+					dispatchEvent(new AppsEvent(AppsEvent.CREATE_DOC_FILE, result.data));
+
+					break;
+
+				case DataName.SPR_FILE:
+
+					dispatchEvent(new AppsEvent(AppsEvent.CREATE_SPR_FILE, result.data));
+
+					break;
+
+				case DataName.PRE_FILE:
+
+					dispatchEvent(new AppsEvent(AppsEvent.CREATE_PRE_FILE, result.data));
+
+					break;
+
 			}
 
 		}
 
 		public function setData(dataObj:Object):void {
+
+			for each (var _data:IData in APPS_DATA_LIST)
+				if (dataObj.name == _data.name)
+					_data.parseData(dataObj.data);
 
 		}
 
@@ -80,7 +112,7 @@ package model.google.apps {
 
 			var _selData:IData;
 
-			for each (var _data:IData in APPS_LIST)
+			for each (var _data:IData in APPS_DATA_LIST)
 				if (name == _data.name)
 					_selData = _data;
 

@@ -6,7 +6,6 @@ package screen.button.auth {
 	
 	import controller.web.WebController;
 	
-	import identifier.ButtonName;
 	import identifier.ControllerName;
 	
 	import manager.controller.ControllerManager;
@@ -19,7 +18,9 @@ package screen.button.auth {
 		
 		override protected function mouseDownHandler():void {
 			
-			webControllerObj.setExecute(ButtonName.RP_DRIVE_CALENDAR);
+			var _executeObj:Object = {type: name};
+			
+			webControllerObj.setExecute(_executeObj);
 			
 		}
 		

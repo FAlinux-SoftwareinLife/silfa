@@ -1,23 +1,17 @@
 package screen.button {
 
 	import flash.display.MovieClip;
-	
+
 	import frame.ScreenFrame;
-	
+
 	import identifier.ButtonName;
 	import identifier.ScreenName;
-	
+
 	import manager.screen.IScreen;
-	
-	import screen.button.auth.GetUserProfileButton;
-	import screen.button.auth.LoginButton;
-	import screen.button.auth.RPDriveCalendarButton;
-	import screen.button.auth.RPGmailButton;
-	import screen.button.auth.RefreshTokenButton;
-	import screen.button.drive.CreateDocButton;
-	import screen.button.drive.CreatePreButton;
-	import screen.button.drive.CreateSprButton;
-	import screen.button.drive.GetFileListButton;
+
+	import screen.button.arm.*;
+	import screen.button.auth.*;
+	import screen.button.drive.*;
 
 	/**
 	 *
@@ -34,27 +28,35 @@ package screen.button {
 
 			{name: ButtonName.AUTH, buttonList: [
 
-					{name: ButtonName.LOGIN, button: LoginButton},
+				{name: ButtonName.LOGIN, button: LoginButton},
 
 					{name: ButtonName.RP_GMAIL, button: RPGmailButton},
 
 					{name: ButtonName.RP_DRIVE_CALENDAR, button: RPDriveCalendarButton},
 
 					{name: ButtonName.REFRESH_TOKEN, button: RefreshTokenButton},
-					
+
 					{name: ButtonName.GET_USER_PROFILE, button: GetUserProfileButton}
 
 				]},
 
 			{name: ButtonName.DRIVE, buttonList: [
 
-					{name: ButtonName.GET_FILE_LIST, button: GetFileListButton},
+				{name: ButtonName.GET_FILE_LIST, button: GetFileListButton},
 
 					{name: ButtonName.CREATE_DOC, button: CreateDocButton},
 
 					{name: ButtonName.CREATE_SPR, button: CreateSprButton},
 
 					{name: ButtonName.CREATE_PRE, button: CreatePreButton}
+
+				]},
+
+			{name: ButtonName.ARM, buttonList: [
+
+				{name: ButtonName.PROFILE_INFO, button: ProfileInfoButton},
+
+					{name: ButtonName.DRIVE_FILE_INFO, button: DriveFileInfoButton}
 
 				]}
 
@@ -116,9 +118,9 @@ package screen.button {
 			return SCREEN_NAME;
 
 		}
-		
+
 		public function set view(obj:Object):void {
-			
+
 		}
 
 	}

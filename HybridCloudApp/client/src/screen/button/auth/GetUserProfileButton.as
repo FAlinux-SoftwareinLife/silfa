@@ -6,7 +6,6 @@ package screen.button.auth {
 
 	import controller.apps.AppsController;
 
-	import identifier.ButtonName;
 	import identifier.ControllerName;
 
 	import manager.controller.ControllerManager;
@@ -20,8 +19,10 @@ package screen.button.auth {
 		}
 
 		override protected function mouseDownHandler():void {
+			
+			var _executeObj:Object = {type: name};
 
-			appsControllerObj.setExecute(ButtonName.GET_USER_PROFILE);
+			appsControllerObj.setExecute(_executeObj);
 
 		}
 

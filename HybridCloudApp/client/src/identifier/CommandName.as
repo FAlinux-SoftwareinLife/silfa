@@ -10,10 +10,14 @@ package identifier {
 		public static const INFO:String = "info";
 		
 		public static const PROFILE:String = "profile";		
-		public static const DRIVE_LIST:String = "driveList";		
-		public static const DOC:String = "doc";		
-		public static const SPREAD:String = "spread";		
-		public static const PRESENT:String = "present";
+		public static const DRIVE_LIST:String = "driveList";
+		public static const DRIVE_FILE_TRASH:String = "driveFileTrash";
+		public static const CREATE_DRIVE_FILE:String = "createDriveFile";
+		
+		public static const INSERT_PROFILE:String = "insertProfile";		
+		public static const INSERT_DRIVE_FILE:String = "insertDriveFile";
+		public static const REQUEST_PROFILE:String = "requestProfile";
+		public static const REQUEST_DRIVE_FILE:String = "requestDriveFile";
 		
 		public function CommandName() {
 		}

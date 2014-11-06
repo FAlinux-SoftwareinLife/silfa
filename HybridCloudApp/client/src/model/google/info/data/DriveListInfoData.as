@@ -19,13 +19,13 @@ package model.google.info.data {
 		private const THUMBNAIL_SIZE_LIST:Object = {document: 230, spreadsheet: 230, presentation: 300, other: 230};
 		private const THUMBNAIL_GENERAL_ICON_URL:String = "https://ssl.gstatic.com/docs/doclist/images/icon_10_generic_xl128.png";
 
-		private var fileInfoObj:Object;
+		private var defiendObj:Object;
 		private var file_list:Vector.<Object>;
 
 
 		public function DriveListInfoData() {
 
-			fileInfoObj = {title: "", modifiedDate: "", fileType: "", alternateLink: "", embedLink: "", thumbnailLink: THUMBNAIL_GENERAL_ICON_URL, pdfLink: ""};
+			defiendObj = {id: "", title: "", modifiedDate: "", fileType: "", alternateLink: "", embedLink: "", thumbnailLink: THUMBNAIL_GENERAL_ICON_URL, pdfLink: "", isOpen: false};
 
 			file_list = new Vector.<Object>();
 
@@ -49,15 +49,9 @@ package model.google.info.data {
 
 		}
 
-		public function getFileList():Vector.<Object> {
-
-			return file_list;
-
-		}
-
 		private function parseItem(item:Object):Object {
 
-			var _parseObj:Object = cloneObj(fileInfoObj);
+			var _parseObj:Object = cloneObj(defiendObj);
 
 			for (var _itemName:String in item) {
 
@@ -173,6 +167,52 @@ package model.google.info.data {
 			_replaceDate = _replaceDate.replace(_replacePattern, _replaceStr);
 
 			return _replaceDate;
+
+		}
+
+		//===================== get set data =====================
+
+		public function getFileList():Vector.<Object> {
+
+			return file_list;
+
+		}
+
+		public function setFileOpen(id:String, b:Boolean):void {
+
+			for each (var _infoObj:Object in file_list)
+				if (id == _infoObj.id)
+					_infoObj.isOpen = b;
+
+		}
+
+		public function getOpenFile():Object {
+
+			var _openFileObj:Object;
+
+			for each (var _infoObj:Object in file_list)
+				if (_infoObj.isOpen)
+					_openFileObj = _infoObj;
+
+			return _openFileObj;
+
+		}
+
+		//===================== add remove data =====================
+
+		public function addFileData(data:Object):void {
+
+			file_list.unshift(parseItem(data));
+
+			//Tracer.log("trace", file_list);
+
+		}
+
+		public function removeFileData(id:String):void {
+
+			for each (var _infoObj:Object in file_list)
+				if (_infoObj.id == id)
+					file_list.splice(file_list.indexOf(_infoObj), 1);
 
 		}
 

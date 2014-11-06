@@ -45,7 +45,7 @@ package controller.web.command {
 
 		}
 
-		public function execute():void {
+		public function execute(obj:Object = null):void {
 
 			googleOAuthProxyObj.requestData(DataName.PERMISSION_DRIVE_CALENDAR);
 

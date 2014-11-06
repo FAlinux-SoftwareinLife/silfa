@@ -14,26 +14,25 @@
         xmlns="http://www.springframework.org/schema/beans">
 
         <bean p:maxWait="-1" p:maxIdle="5" p:minIdle="5" p:maxActive="5"
-                p:initialSize="5" p:password="rework2thebasic!" p:username="silapps"
-                p:url="jdbc:mysql://14.63.220.128:3306/nipa" p:driverClassName="com.mysql.jdbc.Driver"
+                p:initialSize="5" p:password="falinux" p:username="root"
+                p:url="jdbc:mysql://192.168.0.75:3306/nipa" p:driverClassName="com.mysql.jdbc.Driver"
                 destroy-method="close" class="org.apache.commons.dbcp.BasicDataSource"
                 id="dataSource" />
 
-        <bean
-                class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+        <bean   class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
                 id="entityManagerFactory" p:jpaVendorAdapter-ref="hibernateVendor"
                 p:packagesToScan="project.nipa.backend.domain" p:dataSource-ref="dataSource"
                 p:persistenceUnitName="nipaBackend">
 
                 <property name="jpaProperties">
-
                         <props>
-                                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                                 <prop key="hibernate.hbm2ddl.auto">update</prop>
                                 <prop key="hibernate.format_sql">true</prop>
                                 <prop key="hibernate.connection.autocommit">true</prop>
                         </props>
                 </property>
         </bean>
+        
         <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"
                 id="hibernateVendor" p:showSql="false" p:generateDdl="true"
                 p:databasePlatform="org.hibernate.dialect.MySQL5Dialect" p:database="MYSQL" />

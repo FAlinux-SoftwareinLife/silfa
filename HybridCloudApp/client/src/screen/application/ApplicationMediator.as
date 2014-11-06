@@ -75,10 +75,10 @@ package screen.application {
 		public function setApp(appName:String):void {
 
 			nextApp = appName;
-			
+
 			trace("appName = " + appName);
 			trace("currentApp = " + currentApp);
-			
+
 			currentApp != null ? exit() : start();
 
 		}
@@ -107,22 +107,34 @@ package screen.application {
 		}
 
 		private function inMotionFinishedHandler(evt:MotionEvent):void {
-			
+
 			trace(this, evt);
-			
+
 			currentApp = nextApp;
 			nextApp = null;
 
 		}
 
 		private function outMotionFinishedHandler(evt:MotionEvent):void {
-			
+
 			trace(this, evt);
-			
+
 			currentApp = null;
 
 			if (nextApp != null)
 				start();
+
+		}
+
+		public function getApplication(appName:String):ApplicationAbstract {
+
+			var _selApp:ApplicationAbstract;
+
+			for each (var _app:ApplicationAbstract in APPLICATION_LIST)
+				if (appName == _app.name)
+					_selApp = _app;
+
+			return _selApp;
 
 		}
 

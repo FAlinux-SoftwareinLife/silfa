@@ -6,8 +6,8 @@ package screen.button.drive {
 	
 	import controller.apps.AppsController;
 	
-	import identifier.ButtonName;
 	import identifier.ControllerName;
+	import identifier.FileName;
 	
 	import manager.controller.ControllerManager;
 
@@ -21,7 +21,9 @@ package screen.button.drive {
 		
 		override protected function mouseDownHandler():void {
 			
-			appsControllerObj.setExecute(ButtonName.CREATE_DOC);
+			var _executeObj:Object = {type: name, param:FileName.DOCUMENT};
+			
+			appsControllerObj.setExecute(_executeObj);			
 			
 		}
 		

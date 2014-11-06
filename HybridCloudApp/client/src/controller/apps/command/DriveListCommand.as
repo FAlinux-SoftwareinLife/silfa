@@ -28,7 +28,7 @@ package controller.apps.command {
 			return COMMAND_NAME;
 		}
 
-		public function execute():void {
+		public function execute(obj:Object = null):void {
 
 			googleAppsProxyObj.addEventListener(AppsEvent.REQUEST_DRIVE_LIST_COMPLETE, requestDriveListComplete);
 			googleAppsProxyObj.requestData(DataName.DRIVE_LIST);

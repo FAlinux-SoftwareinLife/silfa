@@ -6,25 +6,21 @@
 	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 </head>
 <body>
-	<table>
-		<tr>
-			<td>아이디</td><td><input type="text" id="id"></td>
-		</tr>
-		<tr>
-			<td>이메일</td><td><input type="text" id="email"></td>
-		</tr>
-		<tr>
-			<td>인증</td><td><input type="text" id="authorization"></td>
-		</tr>
-		<tr>
-			<td>사진</td><td><input type="text" id="photo"></td>
-		</tr>
-	</table>
+		
 	<button id="userPOST">userPost</button>
 	<button id="userGET">userGET</button>
 	<button id="userDELETE">userDELETE</button>
 	<button id="userUPDATE">userUPDATE</button>
 
+<br>
+<br>
+
+	<button id="filePOST">filePOST</button>
+	<button id="fileGET">fileGET</button>
+	<button id="fileDELETE">fileDELETE</button>
+	<button id="fileUPDATE">fileUPDATE</button>
+	
+	
 	<div id="userSection"></div>
 	
 	<script type="text/javascript">
@@ -32,10 +28,12 @@
 			var userData = function(){
 				$('#userPOST').on('click',function(){
 					var datas = {
-						id : $('#id').val(),
-						email : $('#email').val(),
-						authorization : $('#authorization').val(),
-						photo : $('#photo').val()
+						userId : 'test03',
+						email :  'test01',
+						authorize :  'test01',
+						photo :  'test01',
+						language :  'test01',
+						gender :  'test01'
 					};
 					
 					$.ajax({
@@ -43,11 +41,8 @@
 						type : "POST",
 						url : "users",
 						data : datas
-					}).done(function(){
-						id : $('#id').val('');
-						email : $('#email').val('');
-						authorization : $('#authorization').val('');
-						photo : $('#photo').val('');
+					}).done(function(data){
+						console.log(data);
 					});
 				});
 				
@@ -55,7 +50,7 @@
 					$.ajax({
 						dataType : "json",
 						type : "GET",
-						url : "users/"+4
+						url : "users/"+'aaa'
 					}).done(function(data){
 						console.log(data);
 					});
@@ -73,11 +68,13 @@
 				
 				$('#userUPDATE').on('click',function(){
 					var datas = {
-							id : $('#id').val(),
-							email : $('#email').val(),
-							authorization : $('#authorization').val(),
-							photo : $('#photo').val()
-					};
+							userId : 'aaa',
+							email :  'aaa',
+							authorize :  'aaa',
+							photo :  'aaa',
+							language :  'aaa',
+							gender :  'aaa'
+						};
 					
 					$.ajax({
 						dataType :"json",
@@ -90,13 +87,72 @@
 					    },
 					}).done(function(data){
 						console.log(data);
-						id : $('#id').val('');
-						email : $('#email').val('');
-						authorization : $('#authorization').val('');
-						photo : $('#photo').val('');
+					});
+				});
+			
+				$('#filePOST').on('click',function(){
+					var datas = {
+						userId : 'test03',
+						fileId : 'test02',
+						fileName : 'test01',
+						modifiedDate :'test01',
+						thumbnail : 'test01',
+						fileType : 'test01'
+						
+					};
+					
+					$.ajax({
+						dataTyep : "json",
+						type : "POST",
+						url : "files",
+						data : datas
+					}).done(function(data){
+						console.log(data);
 					});
 				});
 				
+				$('#fileGET').on('click',function(){
+					$.ajax({
+						dataType : "json",
+						type : "GET",
+						url : "files/"+'test01',
+					}).done(function(data){
+						console.log(data);
+					});
+				});
+				
+				$('#fileDELETE').on('click',function(){
+					$.ajax({
+						dataType : "json",
+						type : "DELETE",
+						url : "files/"+'test02'
+					}).done(function(data){
+						console.log(data);
+					});
+				});
+				
+				$('#fileUPDATE').on('click',function(){
+					var datas = {
+							fileId : 'test02',
+							fileName : 'updateTest01',
+							modifiedDate :'updateTest01',
+							thumbnail : 'updateTest01',
+							fileType : 'updateTest01'
+						};
+					
+					$.ajax({
+						dataType :"json",
+						type : "PUT",
+						url : "files/"+'test02',
+						data : JSON.stringify(datas),
+						headers: { 
+					        'Accept': 'application/json',
+					        'Content-Type': 'application/json' 
+					    },
+					}).done(function(data){
+						console.log(data);
+					});
+				});
 			}
 			userData();
 		});

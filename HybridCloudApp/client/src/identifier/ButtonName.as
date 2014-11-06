@@ -18,6 +18,12 @@ package identifier {
 		public static const CREATE_SPR:String = "createSpr";
 		public static const CREATE_PRE:String = "createPre";
 		
+		
+		public static const ARM:String = "arm";
+		
+		public static const PROFILE_INFO:String = "profileInfo";
+		public static const DRIVE_FILE_INFO:String = "driveFileInfo";
+		
 		public function ButtonName() {
 		}
 	}

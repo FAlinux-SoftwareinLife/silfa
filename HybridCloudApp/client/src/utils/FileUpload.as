@@ -1,4 +1,5 @@
 ﻿package utils {
+	
 	import flash.errors.IllegalOperationError;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;

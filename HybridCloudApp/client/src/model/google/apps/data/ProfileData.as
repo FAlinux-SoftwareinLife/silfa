@@ -5,7 +5,7 @@ package model.google.apps.data {
 	import flash.net.URLRequest;
 	import flash.net.URLRequestHeader;
 
-	import abstracts.AppsDataAbstarct;
+	import abstracts.AppsDataAbstract;
 
 	import identifier.DataName;
 	import identifier.ProxyName;
@@ -17,7 +17,7 @@ package model.google.apps.data {
 	import model.google.info.GoogleInfoProxy;
 	import model.google.info.data.OAuthInfoData;
 
-	public class ProfileData extends AppsDataAbstarct implements IData {
+	public class ProfileData extends AppsDataAbstract implements IData {
 
 		private const DATA_NAME:String = DataName.PROFILE;
 

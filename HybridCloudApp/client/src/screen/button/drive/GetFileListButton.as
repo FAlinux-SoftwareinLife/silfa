@@ -1,11 +1,11 @@
 package screen.button.drive {
+	
 	import flash.display.MovieClip;
 
 	import abstracts.ButtonAbstract;
 
 	import controller.apps.AppsController;
 
-	import identifier.ButtonName;
 	import identifier.ControllerName;
 
 	import manager.controller.ControllerManager;
@@ -19,8 +19,10 @@ package screen.button.drive {
 		}
 
 		override protected function mouseDownHandler():void {
+			
+			var _executeObj:Object = {type: name};
 
-			appsControllerObj.setExecute(ButtonName.GET_FILE_LIST);
+			appsControllerObj.setExecute(_executeObj);
 
 		}
 

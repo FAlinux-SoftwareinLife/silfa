@@ -1,7 +1,7 @@
 package controller.web {
 
-	import controller.web.command.WebRPDriveCalendarCommand;
 	import controller.web.command.WebLoginCommand;
+	import controller.web.command.WebRPDriveCalendarCommand;
 	import controller.web.command.WebRPGmailCommand;
 
 	import identifier.CommandName;
@@ -14,7 +14,7 @@ package controller.web {
 
 		private const CONTROLLER_NAME:String = ControllerName.WEB;
 
-		private var INFO_COMMAND_LIST:Vector.<ICommand> = Vector.<ICommand>([
+		private const INFO_COMMAND_LIST:Vector.<ICommand> = Vector.<ICommand>([
 
 			new WebLoginCommand, new WebRPGmailCommand, new WebRPDriveCalendarCommand
 
@@ -29,9 +29,9 @@ package controller.web {
 
 		}
 
-		public function setExecute(executeType:String):void {
+		public function setExecute(executeObj:Object):void {
 
-			switch (executeType) {
+			switch (executeObj.type) {
 
 				case "login":
 

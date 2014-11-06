@@ -31,7 +31,7 @@ package controller.apps.command {
 
 		}
 
-		public function execute():void {
+		public function execute(obj:Object = null):void {
 
 			googleAppsProxyObj.addEventListener(AppsEvent.REQUEST_PROFILE_COMPLETE, requestProfileComplete);
 			googleAppsProxyObj.requestData(DataName.PROFILE);

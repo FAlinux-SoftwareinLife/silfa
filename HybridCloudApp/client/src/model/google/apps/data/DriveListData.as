@@ -6,7 +6,7 @@ package model.google.apps.data {
 	import flash.net.URLRequestHeader;
 	import flash.net.URLVariables;
 
-	import abstracts.AppsDataAbstarct;
+	import abstracts.AppsDataAbstract;
 
 	import identifier.DataName;
 	import identifier.ProxyName;
@@ -18,7 +18,9 @@ package model.google.apps.data {
 	import model.google.info.GoogleInfoProxy;
 	import model.google.info.data.OAuthInfoData;
 
-	public class DriveListData extends AppsDataAbstarct implements IData {
+	import utils.Tracer;
+
+	public class DriveListData extends AppsDataAbstract implements IData {
 
 		private const DATA_NAME:String = DataName.DRIVE_LIST;
 
@@ -26,11 +28,10 @@ package model.google.apps.data {
 		private const CORPUS:String = "DEFAULT";
 		private const PAGE_TOKEN:String = "";
 		private const PROJECTION:String = "BASIC";
-		private const QUERY:String = "";
+		private const QUERY:String = "trashed = false";
 		//private const QUERY:String = "title contains 'test' and trashed = false";
 
 		private var result:Object;
-
 
 		public function DriveListData() {
 
@@ -87,8 +88,6 @@ package model.google.apps.data {
 		private function loaderComplete(evt:Event):void {
 
 			result.data = JSON.parse(evt.target.data);
-
-//			Tracer.log("trace", result.data);
 
 			sendProxy();
 

@@ -1,10 +1,10 @@
 package controller.apps {
 
-	import controller.apps.command.DocCommand;
+
+	import controller.apps.command.CreateDriveFileCommand;
+	import controller.apps.command.DriveFileTrashCommand;
 	import controller.apps.command.DriveListCommand;
-	import controller.apps.command.PresentCommand;
 	import controller.apps.command.ProfileCommand;
-	import controller.apps.command.SpreadCommand;
 
 	import identifier.CommandName;
 	import identifier.ControllerName;
@@ -16,9 +16,9 @@ package controller.apps {
 
 		private const CONTROLLER_NAME:String = ControllerName.APPS;
 
-		private var APP_COMMAND_LIST:Vector.<ICommand> = Vector.<ICommand>([
+		private const APP_COMMAND_LIST:Vector.<ICommand> = Vector.<ICommand>([
 
-			new ProfileCommand, new DriveListCommand, new DocCommand, new SpreadCommand, new PresentCommand
+			new ProfileCommand, new DriveListCommand, new DriveFileTrashCommand, new CreateDriveFileCommand
 
 			]);
 
@@ -33,9 +33,9 @@ package controller.apps {
 
 		}
 
-		public function setExecute(executeType:String):void {
+		public function setExecute(executeObj:Object):void {
 
-			switch (executeType) {
+			switch (executeObj.type) {
 
 				case "getUserProfile":
 
@@ -49,21 +49,17 @@ package controller.apps {
 
 					break;
 
+				case "driveFileTrash":
+
+					getCommand(CommandName.DRIVE_FILE_TRASH).execute(executeObj.param);
+
+					break;
+
 				case "createDoc":
-
-					getCommand(CommandName.DOC).execute();
-
-					break;
-
 				case "createSpr":
-
-					getCommand(CommandName.SPREAD).execute();
-
-					break;
-
 				case "createPre":
-
-					getCommand(CommandName.PRESENT).execute();
+					
+					getCommand(CommandName.CREATE_DRIVE_FILE).execute(executeObj.param);
 
 					break;
 

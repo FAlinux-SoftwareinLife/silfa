@@ -2,17 +2,11 @@ package screen.application.drive {
 
 	import com.greensock.TweenNano;
 
-	import flash.display.Bitmap;
-	import flash.display.Loader;
-	import flash.display.LoaderInfo;
 	import flash.display.MovieClip;
-	import flash.events.Event;
-	import flash.events.MouseEvent;
-	import flash.net.URLRequest;
-	import flash.net.navigateToURL;
-	import flash.text.TextField;
 
 	import abstracts.ApplicationAbstract;
+
+	import events.TitleAreaMouseEvent;
 
 	import identifier.ApplicationName;
 	import identifier.DataName;
@@ -34,16 +28,7 @@ package screen.application.drive {
 		private var driveFileInfoList:Vector.<Object>;
 		private var driveFile_num:int;
 
-		private const FILE_TYPE_LIST:Vector.<String> = Vector.<String>(["document", "spreadsheet", "presentation", "other"]);
-
-		private const THUMBNAIL_SIZE_LIST:Object = {document: 230, spreadsheet: 230, presentation: 300, other: 230};
-		private const THUMBNAIL_GENERAL_ICON_URL:String = "https://ssl.gstatic.com/docs/doclist/images/icon_10_generic_xl128.png";
-
-		private const DOWNLOAD_TYPE:String = "application/pdf";
-
 		private const FILE_DIFFER_HEIGHT:Number = 5;
-
-		private var thumbnailCheck_num:int;
 
 		public function DriveApplication() {
 
@@ -59,10 +44,11 @@ package screen.application.drive {
 
 		override public function startApp():void {
 
-			setDriveFileList();
+			removeAllDriveFile();
 
-			appArea.visible = true;
-			TweenNano.to(appArea, 1, {alpha: 1, onComplete: startMotionComplete});
+			initDriveFileList();
+
+			startMotion();
 
 		}
 
@@ -74,87 +60,32 @@ package screen.application.drive {
 
 		//===================== set drive file =====================
 
-		private var openNum:int;
-
-		private function setDriveFileList():void {
+		/**
+		 * Set 'DriveFile' list
+		 *
+		 */
+		private function initDriveFileList():void {
 
 			driveFileInfoList = driveListInfoDataObj.getFileList() as Vector.<Object>;
 			driveFile_num = driveFileInfoList.length;
 
-			Tracer.log("trace", driveFileInfoList);
+			var _addList:Array = new Array();
 
-			for (var i:uint = 0; i < driveFile_num; i++) {
+			for (var i:uint = 0; i < driveFile_num; i++)
+				_addList.push(driveFileInfoList[i].id);
 
-				var _driveFileInfo:Object = driveFileInfoList[i] as Object;
-				var _title:String = _driveFileInfo.title;
-				var _modifiedDate:String = _driveFileInfo.modifiedDate;
-				var _fileType:String = _driveFileInfo.fileType;
-				var _alternateLink:String = _driveFileInfo.alternateLink;
-				var _embedLink:String = _driveFileInfo.embedLink;
-				var _thumbnailLink:String = _driveFileInfo.thumbnailLink;
-				var _pdfLink:String = _driveFileInfo.pdfLink;
-
-				var _driveFile:DriveFile = new DriveFile();
-				driveFileArea.addChild(_driveFile);
-
-				_driveFile.name = "driveFile" + String(i);
-
-				_driveFile.infoObj = _driveFileInfo;
-				_driveFile.isOpen = i == openNum;
-
-				var _titleArea:MovieClip = _driveFile.getChildByName("titleArea") as MovieClip;
-				var _fileIconArea:MovieClip = _titleArea.getChildByName("fileIconArea") as MovieClip;
-				var _filenameTxt:TextField = _titleArea.getChildByName("filenameTxt") as TextField;
-
-				var _contentArea:MovieClip = _driveFile.getChildByName("contentArea") as MovieClip;
-				var _contentMask:MovieClip = _driveFile.getChildByName("contentMask") as MovieClip;
-				var _thumbArea:MovieClip = _contentArea.getChildByName("thumbArea") as MovieClip;
-				var _dateTxt:TextField = _contentArea.getChildByName("dateTxt") as TextField;
-				var _openBtn:MovieClip = _contentArea.getChildByName("openBtn") as MovieClip;
-				var _editBtn:MovieClip = _contentArea.getChildByName("editBtn") as MovieClip;
-				var _downBtn:MovieClip = _contentArea.getChildByName("downBtn") as MovieClip;
-				var _trashBtn:MovieClip = _contentArea.getChildByName("trashBtn") as MovieClip;
-
-				_titleArea.mouseChildren = false;
-				_titleArea.buttonMode = true;
-				_titleArea.addEventListener(MouseEvent.CLICK, titleAreaMouseHandler);
-
-				_filenameTxt.text = _title;
-				_dateTxt.text = _modifiedDate;
-
-				if (_embedLink != "") {
-					_openBtn.buttonMode = true;
-					_openBtn.openURL = _embedLink;
-					_openBtn.addEventListener(MouseEvent.CLICK, openBtnMouseHandler);
-				}
-
-				if (_alternateLink != "") {
-					_editBtn.buttonMode = true;
-					_editBtn.openURL = _alternateLink;
-					_editBtn.addEventListener(MouseEvent.CLICK, editBtnMouseHandler);
-				}
-
-				if (_pdfLink != "") {
-					_downBtn.buttonMode = true;
-					_downBtn.openURL = _pdfLink;
-					_downBtn.addEventListener(MouseEvent.CLICK, downBtnMouseHandler);
-				}
-
-				_trashBtn.buttonMode = true;
-				_trashBtn.openURL = _embedLink;
-				_trashBtn.addEventListener(MouseEvent.CLICK, trashBtnnMouseHandler);
-
-				setFileIcon(_fileIconArea, _fileType);
-				setThumbnail(_thumbArea, _thumbnailLink);
-
-			}
-
-			visibleDriveFile(driveFileArea.getChildAt(0) as DriveFile);
-			alignDriveFile();
+			addDriveFile(_addList);
 
 		}
 
-		private function visibleDriveFile(selectFile:DriveFile):void {
+		//===================== align drive file =====================
+
+		/**
+		 * Select open 'DriveFile'
+		 * @param selectFile openfile
+		 *
+		 */
+		private function visibleDriveFile(selectFile:DriveFile = null):void {
 
 			driveFile_num = driveFileArea.numChildren;
 
@@ -164,7 +95,13 @@ package screen.application.drive {
 				var _titleArea:MovieClip = _driveFile.getChildByName("titleArea") as MovieClip;
 				var _contentArea:MovieClip = _driveFile.getChildByName("contentArea") as MovieClip;
 
+				if (selectFile == null)
+					selectFile = _driveFile;
+
 				_driveFile.isOpen = _driveFile == selectFile;
+				
+				driveListInfoDataObj.setFileOpen(_driveFile.infoObj.id, _driveFile.isOpen);
+				
 				_contentArea.y = _driveFile.isOpen ? _titleArea.height : -_contentArea.height + _titleArea.height;
 
 			}
@@ -190,11 +127,11 @@ package screen.application.drive {
 
 					if (_prevDriveFile.isOpen) {
 
-						_driveFile.y = _prevDriveFile.y + _prevDriveFile.height + 10;
+						_driveFile.y = _prevDriveFile.y + _prevDriveFile.height + FILE_DIFFER_HEIGHT;
 
 					} else {
 
-						_driveFile.y = _prevDriveFile.y + _prevDriveFile.titleArea.y + _prevDriveFile.titleArea.height + 10;
+						_driveFile.y = _prevDriveFile.y + _prevDriveFile.titleArea.y + _prevDriveFile.titleArea.height + FILE_DIFFER_HEIGHT;
 
 					}
 
@@ -209,118 +146,129 @@ package screen.application.drive {
 
 		}
 
-		//===================== parse file data =====================
+		private function refreshFileName():void {
 
-		private function setFileIcon(fileIconArea:MovieClip, fileType:String):void {
+			var _driveFileAreaNum:uint = driveFileArea.numChildren;
 
-			for each (var _icon:MovieClip in fileIconArea)
-				_icon.visible = _icon.name == fileType ? true : false;
-
+			for (var j:uint = 0; j < _driveFileAreaNum; j++)
+				driveFileArea.getChildAt(j).name = "driveFile" + String(j);
 
 		}
 
-		private function setThumbnail(thumbArea:MovieClip, thumbnailLink:String):void {
+		public function resetDriveFile():void {
 
-			thumbnailCheck_num = 0;
+			removeAllDriveFile();
+			visibleDriveFile();
+			alignDriveFile();
 
-			var _loader:Loader = new Loader();
-			thumbArea.addChild(_loader);
+		}
 
-			_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, thumbnailComplete);
+		//===================== add remove drive file =====================
 
-			_loader.load(new URLRequest(thumbnailLink));
+		/**
+		 * Add 'DriveFile'
+		 * @param idList 'DriveFile' ID list.
+		 *
+		 */
+		public function addDriveFile(idList:Array):void {
+
+			startMotion();
+
+			var _addList:Vector.<Object> = new Vector.<Object>();
+
+			driveFileInfoList = driveListInfoDataObj.getFileList() as Vector.<Object>;
+
+			for each (var _obj:Object in driveFileInfoList)
+				for each (var _id:String in idList)
+					if (_obj.id == _id)
+						_addList.push(_obj);
+
+			_addList.reverse();
+
+			var _addNum:uint = _addList.length;
+
+			for (var i:uint = 0; i < _addNum; i++) {
+
+				var _driveFileInfo:Object = _addList[i] as Object;
+				var _driveFile:DriveFile = new DriveFile(_driveFileInfo);
+
+				driveFileArea.addChildAt(_driveFile, 0);
+
+				_driveFile.addEventListener(TitleAreaMouseEvent.TITLE_AREA_CLICK, titleAreaMouseHandler);
+
+			}
+
+			refreshFileName();
+
+			visibleDriveFile();
+			alignDriveFile();
+
+		}
+
+		public function removeDriveFile(idList:Array):void {
+
+			driveFile_num = driveFileArea.numChildren;
+
+			var _idListNum:uint = idList.length;
+			var _deleteFileList:Vector.<DriveFile> = new Vector.<DriveFile>();
+
+			for (var i:uint = 0; i < driveFile_num; i++) {
+
+				var _driveFile:DriveFile = driveFileArea.getChildAt(i) as DriveFile;
+				var _id:String = _driveFile.infoObj.id;
+
+				for (var j:uint = 0; j < _idListNum; j++)
+					if (idList[j] == _id)
+						_deleteFileList.push(_driveFile);
+
+			}
+
+			for each (var _deleteDriveFile:DriveFile in _deleteFileList) {
+
+				driveFileArea.removeChild(_deleteDriveFile);
+				_deleteDriveFile = null;
+
+			}
+
+			visibleDriveFile();
+			alignDriveFile();
+
+		}
+
+		private function removeAllDriveFile():void {
+
+			driveFile_num = driveFileArea.numChildren;
+
+			var _deleteFileList:Vector.<DriveFile> = new Vector.<DriveFile>();
+
+			for (var i:uint = 0; i < driveFile_num; i++) {
+
+				var _driveFile:DriveFile = driveFileArea.getChildAt(0) as DriveFile;
+				driveFileArea.removeChild(_driveFile);
+				_driveFile = null;
+
+			}
 
 		}
 
 		//===================== button =====================
 
-		private function titleAreaMouseHandler(evt:MouseEvent):void {
+		private function titleAreaMouseHandler(evt:TitleAreaMouseEvent):void {
 
-			var _titleArea:MovieClip = evt.currentTarget as MovieClip;
-			var _driveFile:DriveFile = _titleArea.parent as DriveFile;
+			var _driveFile:DriveFile = evt.currentTarget as DriveFile;
 
 			visibleDriveFile(_driveFile);
 			alignDriveFile();
 
 		}
 
-		private function openBtnMouseHandler(evt:MouseEvent):void {
-
-			var _openBtn:MovieClip = evt.currentTarget as MovieClip;
-			var _openURL:String = _openBtn.openURL;
-
-			navigateToURL(new URLRequest(_openURL));
-
-		}
-
-		private function editBtnMouseHandler(evt:MouseEvent):void {
-
-			var _editBtn:MovieClip = evt.currentTarget as MovieClip;
-			var _openURL:String = _editBtn.openURL;
-
-			navigateToURL(new URLRequest(_openURL));
-
-		}
-
-		private function downBtnMouseHandler(evt:MouseEvent):void {
-
-			var _downBtn:MovieClip = evt.currentTarget as MovieClip;
-			var _openURL:String = _downBtn.openURL;
-
-			navigateToURL(new URLRequest(_openURL));
-
-		}
-
-		private function trashBtnnMouseHandler(evt:MouseEvent):void {
-
-			var _trashBtn:MovieClip = evt.currentTarget as MovieClip;
-
-		}
-
-		//===================== thumbnail load completed =====================
-
-		private function thumbnailComplete(evt:Event):void {
-
-			var _contentLoaderInfo:LoaderInfo = evt.currentTarget as LoaderInfo;
-			var _loader:Loader = _contentLoaderInfo.loader as Loader;
-			var _thumbnailImg:Bitmap = _loader.content as Bitmap;
-			var _thumbArea:MovieClip = _loader.parent as MovieClip;
-			var _imgArea:MovieClip = _thumbArea.getChildByName("imgArea") as MovieClip;
-			var _thumbFrame:MovieClip = _thumbArea.getChildByName("thumbFrame") as MovieClip;
-			var _thumbFrameShadow:MovieClip = _thumbArea.getChildByName("thumbFrameShadow") as MovieClip;
-
-			_contentLoaderInfo.removeEventListener(Event.COMPLETE, thumbnailComplete);
-
-			for each (var _bitmap:Bitmap in _imgArea)
-				_imgArea.removeChild(_bitmap);
-
-			_imgArea.addChild(_thumbnailImg);
-
-			_thumbArea.removeChild(_loader);
-			_loader = null;
-
-			_thumbFrame.width = _imgArea.width + 3;
-			_thumbFrame.height = _imgArea.height + 3;
-
-			_thumbFrameShadow.width = _imgArea.width + 3;
-			_thumbFrameShadow.height = _imgArea.height + 3;
-
-			_imgArea.x = -_imgArea.width / 2;
-			_imgArea.y = -_imgArea.height / 2;
-
-			thumbnailCheck_num++;
-
-			if (driveFile_num == thumbnailCheck_num) {
-
-				startMotion();
-
-			}
-
-		}
-
 		//===================== start, out motion =====================
 
 		private function startMotion():void {
+
+			appArea.visible = true;
+
+			TweenNano.to(appArea, 1, {alpha: 1, onComplete: startMotionComplete});
 
 		}
 
@@ -329,7 +277,7 @@ package screen.application.drive {
 
 		}
 
-		//===================== start, out mition complete =====================
+		//===================== start, out motion complete =====================
 
 		private function startMotionComplete():void {
 
@@ -339,6 +287,8 @@ package screen.application.drive {
 
 		private function outMotionComplete():void {
 
+			removeAllDriveFile();
+
 			appArea.visible = false;
 
 			outMotionFinished();
@@ -346,18 +296,19 @@ package screen.application.drive {
 		}
 
 		//===================== obj reference =====================
-
-		private function get driveListInfoDataObj():DriveListInfoData {
-
-			return googleInfoProxyObj.getData(DataName.DRIVE_LIST_INFO) as DriveListInfoData;
-
-		}
-
+		
 		private function get googleInfoProxyObj():GoogleInfoProxy {
 
 			return ModelManager.modelManagerObj.getProxy(ProxyName.GOOGLE_INFO) as GoogleInfoProxy;
 
 		}
+		
+		private function get driveListInfoDataObj():DriveListInfoData {
+			
+			return googleInfoProxyObj.getData(DataName.DRIVE_LIST_INFO) as DriveListInfoData;
+			
+		}
+
 
 	}
 }
