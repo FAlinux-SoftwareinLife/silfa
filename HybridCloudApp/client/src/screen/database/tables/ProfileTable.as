@@ -11,7 +11,7 @@ package screen.database.tables {
 
 	import manager.model.ModelManager;
 
-	import model.db.info.InfoProxy;
+	import model.db.info.ArmInfoProxy;
 	import model.db.info.data.APInfoData;
 
 	public class ProfileTable extends TableAbstract {
@@ -46,9 +46,9 @@ package screen.database.tables {
 			
 		}
 
-		private function get infoProxyObj():InfoProxy {
+		private function get infoProxyObj():ArmInfoProxy {
 
-			return ModelManager.modelManagerObj.getProxy(ProxyName.INFO) as InfoProxy;
+			return ModelManager.modelManagerObj.getProxy(ProxyName.ARM_INFO) as ArmInfoProxy;
 
 		}
 

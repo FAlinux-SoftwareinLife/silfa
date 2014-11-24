@@ -5,6 +5,7 @@ package identifier {
 		public static const GOOGLE_LOGIN:String = "googleLogin";
 		public static const PERMISSION_GMAIL:String = "permissionGmail";
 		public static const PERMISSION_DRIVE_CALENDAR:String = "permissionDriveCalendar";
+		public static const OAUTH_VALIDATION:String = "oauthValidation";
 		
 		public static const PROFILE:String = "profile";
 		public static const DRIVE_LIST:String = "driveList";

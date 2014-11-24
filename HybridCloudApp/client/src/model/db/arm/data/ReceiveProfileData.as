@@ -13,9 +13,11 @@ package model.db.arm.data {
 	import manager.model.IData;
 	import manager.model.ModelManager;
 
-	import model.db.arm.ArmProxy;
+	import model.db.arm.ArmServerProxy;
 	import model.google.info.GoogleInfoProxy;
 	import model.google.info.data.ProfileInfoData;
+
+	import utils.Tracer;
 
 	public class ReceiveProfileData implements IData {
 
@@ -63,9 +65,9 @@ package model.db.arm.data {
 			trace("Receive Arm Server - Profile");
 
 			var _data:Object = JSON.parse(evt.target.data);
-			
-			result.data = _data.data;
 
+			result.data = _data.data;
+			Tracer.log(result.data);
 			sendProxy();
 
 		}
@@ -89,11 +91,11 @@ package model.db.arm.data {
 
 		}
 
-		private function get armProxyObj():ArmProxy {
+		private function get armProxyObj():ArmServerProxy {
 
-			return ModelManager.modelManagerObj.getProxy(ProxyName.ARM) as ArmProxy;
+			return ModelManager.modelManagerObj.getProxy(ProxyName.ARM_SERVER) as ArmServerProxy;
 
 		}
-		
+
 	}
 }

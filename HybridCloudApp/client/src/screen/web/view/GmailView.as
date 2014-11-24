@@ -13,13 +13,6 @@ package screen.web.view {
 			super(VIEW_NAME);
 			
 		}
-		
-		override public function openWebView(src:String):void {
-			
-			onWebview(true, src);
-			
-		}
-		
-		
+				
 	}
 }

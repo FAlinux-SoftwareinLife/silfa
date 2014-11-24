@@ -5,6 +5,10 @@ package info {
 		public static const HEADER_NAME_AUTH:String = "Authorization";
 		public static const HEADER_VALUE_AUTH:String = "Bearer ";
 		
+		public static const GOOGLE_OAUTH_URL:String = "https://accounts.google.com/o/oauth2/auth?";
+		public static const GOOGLE_LOGOUT_URL:String = "http://accounts.google.com/logout";
+		public static const OAUTH_VALIDATION_URL:String = "https://www.googleapis.com/oauth2/v1/tokeninfo";
+		
 		public static const PROFILE:String = "https://www.googleapis.com/plus/v1/people/me";
 		public static const TOKEN_VALIDATION:String = "https://www.googleapis.com/oauth2/v1/tokeninfo";		
 		public static const DRIVE_LIST:String = "https://www.googleapis.com/drive/v2/files";

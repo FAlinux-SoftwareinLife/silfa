@@ -1,20 +1,21 @@
 package screen.button.auth {
 
-	import flash.display.MovieClip;
-
 	import abstracts.ButtonAbstract;
-
+	
 	import controller.web.WebController;
-
+	
+	import identifier.ButtonName;
 	import identifier.ControllerName;
-
+	
 	import manager.controller.ControllerManager;
 
 	public class RPGmailButton extends ButtonAbstract {
+		
+		private const BUTTON_NAME:String = ButtonName.RP_GMAIL;
 
-		public function RPGmailButton(name:String, button:MovieClip) {
+		public function RPGmailButton() {
 
-			super(name, button);
+			super(BUTTON_NAME);
 
 		}
 

@@ -1,12 +1,14 @@
 package controller.web {
 
+	import controller.web.command.ValidationCommand;
 	import controller.web.command.WebLoginCommand;
+	import controller.web.command.WebLogoutCommand;
 	import controller.web.command.WebRPDriveCalendarCommand;
 	import controller.web.command.WebRPGmailCommand;
-
+	
 	import identifier.CommandName;
 	import identifier.ControllerName;
-
+	
 	import manager.controller.ICommand;
 	import manager.controller.IController;
 
@@ -16,7 +18,7 @@ package controller.web {
 
 		private const INFO_COMMAND_LIST:Vector.<ICommand> = Vector.<ICommand>([
 
-			new WebLoginCommand, new WebRPGmailCommand, new WebRPDriveCalendarCommand
+			new WebLoginCommand, new WebLogoutCommand, new WebRPGmailCommand, new WebRPDriveCalendarCommand, new ValidationCommand
 
 			]);
 
@@ -38,6 +40,12 @@ package controller.web {
 					getCommand(CommandName.WEB_LOGIN).execute();
 
 					break;
+				
+				case "logout":
+					
+					getCommand(CommandName.WEB_LOGOUT).execute();
+					
+					break;
 
 				case "rpGmail":
 
@@ -49,6 +57,12 @@ package controller.web {
 
 					getCommand(CommandName.WEB_RP_DRIVE_CALENDAR).execute();
 
+					break;
+				
+				case "validationToken":
+					
+					getCommand(CommandName.VALIDATION).execute();
+					
 					break;
 
 			}

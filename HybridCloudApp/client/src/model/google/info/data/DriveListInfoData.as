@@ -179,7 +179,7 @@ package model.google.info.data {
 		}
 
 		public function setFileOpen(id:String, b:Boolean):void {
-
+trace("set file open = " + id, b);
 			for each (var _infoObj:Object in file_list)
 				if (id == _infoObj.id)
 					_infoObj.isOpen = b;

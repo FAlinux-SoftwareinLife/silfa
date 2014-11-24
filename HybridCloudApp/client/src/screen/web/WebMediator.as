@@ -1,14 +1,17 @@
 package screen.web {
 
+	import abstracts.WebViewAbstract;
+
+	import frame.ScreenFrame;
+
 	import identifier.ScreenName;
 
 	import manager.screen.IScreen;
 
-	import frame.ScreenFrame;
 	import screen.web.view.DriveCalendarView;
 	import screen.web.view.GmailView;
 	import screen.web.view.LoginView;
-	import abstracts.WebViewAbstract;
+	import screen.web.view.LogoutView;
 
 	/**
 	 * Shows the Web page. Activate the 'StageWebView'.
@@ -20,7 +23,7 @@ package screen.web {
 
 		private const WEB_VIEW_LIST:Vector.<WebViewAbstract> = Vector.<WebViewAbstract>([
 
-			new LoginView(), new GmailView(), new DriveCalendarView()
+			new LoginView, new LogoutView, new GmailView, new DriveCalendarView
 
 			]);
 
@@ -28,19 +31,19 @@ package screen.web {
 
 		}
 
-		public function reset():void {
-
-		}
-
-		public function get name():String {
-			return SCREEN_NAME;
-		}
-
 		public function set view(obj:Object):void {
 
 			for each (var _view:WebViewAbstract in WEB_VIEW_LIST)
 				if (_view.name == obj.name)
-					_view.openWebView(obj.url);
+					_view.onWebview(true, obj.url);
+
+		}
+
+		public function set openWebView(obj:Object):void {
+
+			for each (var _view:WebViewAbstract in WEB_VIEW_LIST)
+				if (_view.name == obj.name)
+					_view.openWebView(obj.height);
 
 		}
 
@@ -51,6 +54,15 @@ package screen.web {
 					_view.offWebview();
 
 		}
+		
+		public function reset():void {
+			
+		}
+		
+		public function get name():String {
+			return SCREEN_NAME;
+		}
+
 
 	}
 }

@@ -3,7 +3,7 @@ package utils {
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.media.StageWebView;
-
+	
 	import events.WebviewEvent;
 
 	/**
@@ -18,14 +18,28 @@ package utils {
 		private var hostEndStr:String = "/";
 		private var queryStartStrList:Vector.<String> = Vector.<String>(["?", "#"]);
 
+		private var firstOpen:Boolean;
+		private var endOpen:Boolean;
+
 		private var endPoint:String;
 
 		public function WebviewNotification(blockWebviewNotification:BlockWebviewNotification) {
 
+			firstOpen = endOpen = false;
+
+		}
+
+		public function firstOfAddress(swv:StageWebView):void {
+
+			firstOpen = true;
+
+			swv.addEventListener(Event.COMPLETE, swvCompleteHandler);
 
 		}
 
 		public function arriveOfAddress(swv:StageWebView, endPoint:String):void {
+
+			endOpen = true;
 
 			this.endPoint = endPoint;
 			swv.addEventListener(Event.COMPLETE, swvCompleteHandler);
@@ -34,27 +48,53 @@ package utils {
 
 		private function swvCompleteHandler(evt:Event):void {
 
-			var _url:String = evt.target.location;
+			var _swv:StageWebView = evt.currentTarget as StageWebView;
+			
+			var _url:String = _swv.location;
 			var _host:String = getLocationHost(_url);
-			var _query:String = getLocationQuery(_url);
+			
+			if (firstOpen)
+				firstCompleteHander(_swv);
 
-			trace("_url = " + _url);
-			trace("host = " + _host);
-			trace("query = " + _query);
-
-			if (_host == endPoint) {
-
-				evt.target.removeEventListener(Event.COMPLETE, swvCompleteHandler);
-
-				trace("ok endPoint");
-
-				var _paramObj:Object = {query: _query}
-
-				dispatchEvent(new WebviewEvent(WebviewEvent.END_POINT_COMPLETE, _paramObj));
-
-			}
-
+			if (_host == endPoint)
+				endCompleteHander(_swv, getLocationQuery(_url));
+			
 		}
+		
+		/**
+		 * First swv complete event. 
+		 * @param swv Event target.
+		 * 
+		 */
+		private function firstCompleteHander(swv:StageWebView):void {
+			
+			firstOpen = false;
+			
+			dispatchEvent(new WebviewEvent(WebviewEvent.FIRST_POINT_COMPLETE));
+			
+			if (!endOpen)
+				swv.removeEventListener(Event.COMPLETE, swvCompleteHandler);
+		
+		}
+		
+		/**
+		 * End swv complete event.
+		 * @param swv Event target.
+		 * @param query URL query.
+		 * 
+		 */
+		private function endCompleteHander(swv:StageWebView, query:String):void {
+			
+			endOpen = false;
+			
+			swv.removeEventListener(Event.COMPLETE, swvCompleteHandler);
+			
+			var _paramObj:Object = {query: query}
+			
+			dispatchEvent(new WebviewEvent(WebviewEvent.END_POINT_COMPLETE, _paramObj));
+			
+		}
+
 
 		/**
 		 * Parse for url.

@@ -1,20 +1,21 @@
-package screen.button.arm {
-	
-	import flash.display.MovieClip;
+package screen.button.arm {	
 	
 	import abstracts.ButtonAbstract;
 	
 	import controller.arm.ArmController;
 	
+	import identifier.ButtonName;
 	import identifier.ControllerName;
 	
 	import manager.controller.ControllerManager;
 
 	public class ProfileInfoButton extends ButtonAbstract {
 		
-		public function ProfileInfoButton(name:String, button:MovieClip) {
+		private const BUTTON_NAME:String = ButtonName.PROFILE_INFO;
+		
+		public function ProfileInfoButton() {
 			
-			super(name, button);
+			super(BUTTON_NAME);
 			
 		}
 		

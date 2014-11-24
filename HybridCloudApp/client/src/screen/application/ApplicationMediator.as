@@ -29,12 +29,10 @@ package screen.application {
 
 			]);
 
-		private var currentApp:String;
-		private var nextApp:String;
+		public var currentApp:String;
+		public var nextApp:String;
 
 		public function ApplicationMediator() {
-
-			super();
 
 			init();
 
@@ -76,10 +74,8 @@ package screen.application {
 
 			nextApp = appName;
 
-			trace("appName = " + appName);
-			trace("currentApp = " + currentApp);
-
-			currentApp != null ? exit() : start();
+			//if (currentApp != appName)
+				currentApp != null ? exit() : start();
 
 		}
 
@@ -108,16 +104,12 @@ package screen.application {
 
 		private function inMotionFinishedHandler(evt:MotionEvent):void {
 
-			trace(this, evt);
-
 			currentApp = nextApp;
 			nextApp = null;
 
 		}
 
 		private function outMotionFinishedHandler(evt:MotionEvent):void {
-
-			trace(this, evt);
 
 			currentApp = null;
 
@@ -137,7 +129,6 @@ package screen.application {
 			return _selApp;
 
 		}
-
 
 	}
 }

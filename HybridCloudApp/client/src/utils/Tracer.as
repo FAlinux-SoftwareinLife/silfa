@@ -5,27 +5,24 @@ package utils {
 		private static var _tracer:Tracer;
 
 		private static var _data:Object;
+		private static var _dataStr:String;
 
 		public function Tracer(blockTracer:BlockTracer) {
 		}
 
-		public static function log(type:String, data:Object):void {
+		public static function log(data:Object):String {
 
 			_data = data;
 
-			switch (type) {
+			spreadTrace();
 
-				case "trace":
-
-					spreadTrace();
-
-					break;
-
-			}
+			return _dataStr;
 
 		}
 
 		private static function spreadTrace():void {
+
+			_dataStr = new String();
 
 			trace("\n\n============ Trace log : start ============\n");
 
@@ -33,23 +30,23 @@ package utils {
 
 				var _num:uint = _data.length == "undefined" ? _data.length : _data.items.length;
 
-				trace("item num = " + _num);
+//				trace("item num = " + _num);
 
 			} catch (msg:Error) {
 
-				trace(msg.message);
+//				trace(msg.message);
 
 			}
 
 
 			for (var i:Object in _data) {
 
-				trace("\n----- first -----");
+				//trace("\n----- first -----");
 
 				var _subObj:Object = _data[i];
 
 				trace("\n" + i + " = " + _subObj);
-
+				addDataStr(i + " = " + _subObj);
 
 				for (var j:Object in _subObj) {
 
@@ -58,6 +55,7 @@ package utils {
 					var _trdObj:Object = _subObj[j];
 
 					trace("\n" + j + " = " + _trdObj);
+					addDataStr(j + " = " + _trdObj);
 
 					for (var h:Object in _trdObj) {
 
@@ -66,6 +64,7 @@ package utils {
 						var _fourthObj:Object = _trdObj[h];
 
 						trace("\n" + h + " = " + _fourthObj);
+						addDataStr(h + " = " + _fourthObj);
 
 						for (var k:Object in _fourthObj) {
 
@@ -74,6 +73,7 @@ package utils {
 							var _fifthObj:Object = _fourthObj[k];
 
 							trace("\n" + k + " = " + _fifthObj);
+							addDataStr(k + " = " + _fifthObj);
 
 						}
 
@@ -83,6 +83,12 @@ package utils {
 			}
 
 			trace("\n\n============ Trace log : end ============");
+
+		}
+
+		private static function addDataStr(str:String):void {
+
+			_dataStr += str + "\n\n";
 
 		}
 

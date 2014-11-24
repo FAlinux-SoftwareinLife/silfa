@@ -1,6 +1,7 @@
 package abstracts {
 	
 	import info.GoogleClientInfo;
+	import info.GoogleHTTPRequestInfo;
 
 	public class OAuthDataAbstract {
 		
@@ -9,7 +10,7 @@ package abstracts {
 		
 		protected function get oauthURL():String {
 		
-			return GoogleClientInfo.GOOGLE_OAUTH_URL;
+			return GoogleHTTPRequestInfo.GOOGLE_OAUTH_URL;
 		
 		}
 		

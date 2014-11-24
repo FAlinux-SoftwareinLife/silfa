@@ -1,5 +1,8 @@
 package screen.application.drive {
 
+	import com.greensock.TweenNano;
+	import com.greensock.easing.Sine;
+	
 	import flash.display.Bitmap;
 	import flash.display.Loader;
 	import flash.display.LoaderInfo;
@@ -9,24 +12,31 @@ package screen.application.drive {
 	import flash.net.URLRequest;
 	import flash.net.navigateToURL;
 	import flash.text.TextField;
-
+	
 	import controller.apps.AppsController;
-
+	
 	import events.TitleAreaMouseEvent;
-
+	
 	import identifier.ControllerName;
 	import identifier.DataName;
-
+	import identifier.ScreenName;
+	
 	import manager.controller.ControllerManager;
+	import manager.screen.ScreenManager;
+	
+	import screen.web.WebMediator;
 
 	public class DriveFile extends DriveFileObj {
 
 		private var _infoObj:Object;
 		private var _isOpen:Boolean;
 		private var _prevDriveFile:DriveFile;
+		private var _tx:Number;
+		private var _ty:Number;
 
 		private const THUMB_FRAME_DIFFER:Number = 7;
 		private const BUTTON:Object = {TITLE: "titleArea", OPEN: "openBtn", EDIT: "editBtn", DOWN: "downBtn", TRASH: "trashBtn"};
+
 
 		public function DriveFile(infoObj:Object) {
 
@@ -37,8 +47,8 @@ package screen.application.drive {
 		}
 
 		/**
-		 * Initialize 'DriveFile' 
-		 * 
+		 * Initialize 'DriveFile'
+		 *
 		 */
 		public function init():void {
 
@@ -56,7 +66,6 @@ package screen.application.drive {
 
 			_filenameTxt.text = this._infoObj.title;
 			_dateTxt.text = this._infoObj.modifiedDate;
-
 
 			titleArea.mouseChildren = false;
 			titleArea.buttonMode = true;
@@ -102,15 +111,45 @@ package screen.application.drive {
 
 		}
 
+		public function set tx(num:Number):void {
+
+			this._tx = num;
+
+		}
+
+		public function set ty(num:Number):void {
+
+			this._ty = num;
+
+		}
+
+		public function get prevFile():DriveFile {
+
+			return _prevDriveFile;
+
+		}
+
 		public function get isOpen():Boolean {
 
 			return _isOpen;
 
 		}
-		
+
 		public function get infoObj():Object {
 
 			return this._infoObj;
+
+		}
+
+		public function get tx():Number {
+
+			return this._tx;
+
+		}
+
+		public function get ty():Number {
+
+			return this._ty;
 
 		}
 
@@ -128,6 +167,8 @@ package screen.application.drive {
 		private function setThumbnail(thumbArea:MovieClip, thumbnailLink:String):void {
 
 			var _loader:Loader = new Loader();
+
+			thumbArea.alpha = 0;
 			thumbArea.addChild(_loader);
 
 			_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, thumbnailComplete);
@@ -167,6 +208,8 @@ package screen.application.drive {
 			_imgArea.x = -_imgArea.width / 2;
 			_imgArea.y = -_imgArea.height / 2;
 
+			TweenNano.to(_thumbArea, 0.4, {alpha: 1, ease: Sine.easeOut});
+
 		}
 
 		//===================== button =====================
@@ -188,6 +231,11 @@ package screen.application.drive {
 				case BUTTON.DOWN:
 
 					navigateToURL(new URLRequest(_btn.openURL));
+					/*
+					webMediatorObj.view = {name: ViewName.LOGIN, url:_btn.openURL};
+					
+					webMediatorObj.openWebView = {name: ViewName.LOGIN, height: 800};
+					*/
 
 					break;
 
@@ -203,12 +251,21 @@ package screen.application.drive {
 
 
 		}
+		
+		// ------------------------ get obj ------------------------
 
 		private function get appsControllerObj():AppsController {
 
 			return ControllerManager.controllerManagerObj.getController(ControllerName.APPS) as AppsController;
 
 		}
+		
+		private function get webMediatorObj():WebMediator {
+			
+			return ScreenManager.screenManagerObj.getMediator(ScreenName.WEB) as WebMediator;
+			
+		}
+
 
 	}
 }

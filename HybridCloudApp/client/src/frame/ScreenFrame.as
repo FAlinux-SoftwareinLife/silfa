@@ -75,13 +75,35 @@ package frame {
 		}
 
 		/**
-		 * The connectInfo area on the screen.
-		 * @return connectInfoArea movieclip.
+		 * The log area on the screen.
+		 * @return logArea movieclip.
 		 *
 		 */
-		public static function get connectInfo_area():MovieClip {
+		public static function get log_area():MovieClip {
 
-			return hcm_stage.connectInfoArea;
+			return hcm_stage.logArea;
+
+		}
+
+		/**
+		 * The guide area on the screen.
+		 * @return guideArea movieclip.
+		 *
+		 */
+		public static function get guide_area():MovieClip {
+
+			return hcm_stage.guideArea;
+
+		}
+
+		/**
+		 * The loading area on the screen.
+		 * @return loadingArea movieclip.
+		 *
+		 */
+		public static function get loading_area():MovieClip {
+
+			return hcm_stage.loadingArea;
 
 		}
 
@@ -90,7 +112,7 @@ package frame {
 			if (swv == null) {
 
 				swv = new StageWebView();
-				swv.viewPort = new Rectangle(0, 0, HCM_STAGE.stage.stageWidth, HCM_STAGE.stage.stageHeight);
+				swv.viewPort = new Rectangle();
 				swv.stage = HCM_STAGE.stage;
 
 			}

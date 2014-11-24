@@ -1,4 +1,5 @@
 package model.db.info {
+	
 	import flash.events.IEventDispatcher;
 	
 	import abstracts.ModelProxyAbstract;
@@ -11,9 +12,9 @@ package model.db.info {
 	import model.db.info.data.ADFInfoData;
 	import model.db.info.data.APInfoData;
 
-	public class InfoProxy extends ModelProxyAbstract implements IModel {
+	public class ArmInfoProxy extends ModelProxyAbstract implements IModel {
 		
-		private const MODEL_NAME:String = ProxyName.INFO;
+		private const MODEL_NAME:String = ProxyName.ARM_INFO;
 		
 		private const INFO_DATA_LIST:Vector.<Object> = Vector.<Object>([
 			
@@ -21,7 +22,7 @@ package model.db.info {
 			
 		]);
 		
-		public function InfoProxy(target:IEventDispatcher = null) {
+		public function ArmInfoProxy(target:IEventDispatcher = null) {
 			
 		}
 

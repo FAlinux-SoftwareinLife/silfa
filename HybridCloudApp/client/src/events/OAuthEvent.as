@@ -9,6 +9,9 @@ package events {
 		public static const REQUEST_LOGIN_COMPLETE:String = "requestLoginComplete";
 		public static const REQUEST_GMAIL_COMPLETE:String = "requestGmailComplete";
 		public static const REQUEST_DRIVE_CALENDAR_COMPLETE:String = "requestDriveCalendarComplete";
+		public static const REQUEST_OAUTH_VALIDATION_COMPLETE:String = "requestOAuthValidationComplete";
+		
+		public static const SET_LOGIN_COMPLETE:String = "setLoginComplete";
 		
 		public function OAuthEvent(type:String, paramObj:Object = null, bubbles:Boolean = false, cancelable:Boolean = false) {
 			

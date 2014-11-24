@@ -29,8 +29,6 @@ package screen.database {
 
 		public function DatabaseMediator() {
 
-			super();
-
 			init();
 
 		}

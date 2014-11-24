@@ -2,15 +2,15 @@ package model.google.oauth.data {
 
 	import flash.net.URLRequest;
 	import flash.net.URLVariables;
-	
+
 	import abstracts.OAuthDataAbstract;
-	
+
 	import identifier.DataName;
 	import identifier.ProxyName;
-	
+
 	import manager.model.IData;
 	import manager.model.ModelManager;
-	
+
 	import model.google.oauth.GoogleOAuthProxy;
 
 	/**
@@ -28,11 +28,11 @@ package model.google.oauth.data {
 			result = {type: DATA_NAME, data: ""};
 
 		}
-		
+
 		public function get name():String {
-			
+
 			return DATA_NAME;
-			
+
 		}
 
 		public function requestData():void {
@@ -77,11 +77,11 @@ package model.google.oauth.data {
 			return _url;
 
 		}
-		
+
 		private function get googleOAuthProxyObj():GoogleOAuthProxy {
-		
+
 			return ModelManager.modelManagerObj.getProxy(ProxyName.GOOGLE_OAUTH) as GoogleOAuthProxy;
-		
+
 		}
 
 

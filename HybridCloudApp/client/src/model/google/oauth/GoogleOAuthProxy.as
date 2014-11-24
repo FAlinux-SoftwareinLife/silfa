@@ -11,6 +11,7 @@ package model.google.oauth {
 	import manager.model.IModel;
 
 	import model.google.oauth.data.GoogleLoginData;
+	import model.google.oauth.data.OAuthValidationData;
 	import model.google.oauth.data.PermissionDriveCalendarData;
 	import model.google.oauth.data.PermissionGmailData;
 
@@ -29,9 +30,9 @@ package model.google.oauth {
 
 			new PermissionGmailData,
 
-			new PermissionDriveCalendarData
+			new PermissionDriveCalendarData,
 
-			//new RefreshTokenData
+			new OAuthValidationData
 
 			]);
 
@@ -87,9 +88,9 @@ package model.google.oauth {
 
 					break;
 
-				case "rpCalendar":
+				case DataName.OAUTH_VALIDATION:
 
-
+					dispatchEvent(new OAuthEvent(OAuthEvent.REQUEST_OAUTH_VALIDATION_COMPLETE, result));
 
 					break;
 
@@ -100,6 +101,9 @@ package model.google.oauth {
 
 		public function setData(dataObj:Object):void {
 
+			for each (var _data:IData in OAUTH_DATA_LIST)
+				if (dataObj.name == _data.name)
+					_data.parseData(dataObj.data);
 
 		}
 

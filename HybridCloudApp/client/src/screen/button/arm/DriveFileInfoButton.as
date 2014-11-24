@@ -1,20 +1,21 @@
 package screen.button.arm {
-
-	import flash.display.MovieClip;
 	
 	import abstracts.ButtonAbstract;
 	
 	import controller.arm.ArmController;
 	
+	import identifier.ButtonName;
 	import identifier.ControllerName;
 	
 	import manager.controller.ControllerManager;
 
 	public class DriveFileInfoButton extends ButtonAbstract {
 
-		public function DriveFileInfoButton(name:String, button:MovieClip) {
+		private const BUTTON_NAME:String = ButtonName.DRIVE_FILE_INFO;
+		
+		public function DriveFileInfoButton() {
 			
-			super(name, button);
+			super(BUTTON_NAME);
 			
 		}
 

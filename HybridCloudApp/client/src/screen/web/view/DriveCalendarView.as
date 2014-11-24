@@ -14,11 +14,5 @@ package screen.web.view {
 			
 		}
 		
-		override public function openWebView(src:String):void {
-			
-			onWebview(true, src);
-			
-		}
-		
 	}
 }

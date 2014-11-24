@@ -1,19 +1,22 @@
 package screen.button.auth {
 	
-	import flash.display.MovieClip;
-	
 	import abstracts.ButtonAbstract;
 	
 	import controller.web.WebController;
 	
+	import identifier.ButtonName;
 	import identifier.ControllerName;
 	
 	import manager.controller.ControllerManager;
 
 	public class RPDriveCalendarButton extends ButtonAbstract {
 		
-		public function RPDriveCalendarButton(name:String, button:MovieClip) {
-			super(name, button);			
+		private const BUTTON_NAME:String = ButtonName.RP_DRIVE_CALENDAR;
+		
+		public function RPDriveCalendarButton() {
+			
+			super(BUTTON_NAME);
+			
 		}
 		
 		override protected function mouseDownHandler():void {

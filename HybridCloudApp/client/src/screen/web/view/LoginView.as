@@ -14,12 +14,5 @@ package screen.web.view {
 
 		}
 
-		override public function openWebView(src:String):void {
-
-			//onWebview(true, "http://accounts.google.com/logout");
-			onWebview(true, src);
-
-		}
-
 	}
 }

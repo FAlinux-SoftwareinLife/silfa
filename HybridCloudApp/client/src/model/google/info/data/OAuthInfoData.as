@@ -1,9 +1,13 @@
 package model.google.info.data {
 
 	import identifier.DataName;
-
+	import identifier.ProxyName;
+	
 	import manager.model.IData;
-
+	import manager.model.ModelManager;
+	
+	import model.google.info.GoogleInfoProxy;
+	
 	import utils.URLStringParser;
 
 	public class OAuthInfoData implements IData {
@@ -11,8 +15,12 @@ package model.google.info.data {
 		private static const DATA_NAME:String = DataName.OAUTH_INFO;
 
 		private var oauthInfoObj:Object;
+		
+		private var result:Object;
 
 		public function OAuthInfoData() {
+			
+			result = {type: DATA_NAME, data: ""};
 
 			oauthInfoObj = {
 
@@ -42,19 +50,32 @@ package model.google.info.data {
 		public function parseData(data:Object):void {
 
 			var _queryObj:Object = urlStringParserObj.getQueryObj(String(data));
-			var _scope:Vector.<String> = urlStringParserObj.getScopeList(_queryObj.scope);
+			trace("_queryObj.access_token  = " + _queryObj.access_token);
+			
+			var _takeOpen:Boolean = _queryObj.access_token !== undefined;
+			
+			if (_takeOpen)
+				setInfo(_queryObj);
+			
+			result.data = {takeToken:_takeOpen};
+			
+			sendProxy();
+			
+		}
+
+		private function setInfo(queryObj:Object):void {
+
+			var _scope:Vector.<String> = urlStringParserObj.getScopeList(queryObj.scope);
 			var _scopeNum:int = _scope.length;
 
-			oauthInfoObj.tokenType = _queryObj.token_type;
-			oauthInfoObj.accessToken = _queryObj.access_token;
-			oauthInfoObj.expireTime = _queryObj.expires_in;
-			oauthInfoObj.state = _queryObj.state;
+			oauthInfoObj.tokenType = queryObj.token_type;
+			oauthInfoObj.accessToken = queryObj.access_token;
+			oauthInfoObj.expireTime = queryObj.expires_in;
+			oauthInfoObj.state = queryObj.state;
 			oauthInfoObj.scope = _scopeNum != 0 ? _scope : oauthInfoObj.scope;
 
 		}
-
-		//토큰을 획득한지 확인 (토큰획득이 안되어 있으면 요청)
-		//access token 요청시 유효성 검사 (유효하지 않은 토큰이면 재요청)		
+		
 		public function getAccessToken():String {
 
 			return oauthInfoObj.accessToken;
@@ -67,16 +88,55 @@ package model.google.info.data {
 
 		}
 
+		public function getState():String {
+
+			return oauthInfoObj.state;
+
+		}
+
 		public function getScope():Vector.<String> {
 
 			return oauthInfoObj.scope;
 
 		}
 
+		public function reset():void {
+
+			oauthInfoObj = {
+
+					tokenType: "",
+
+					accessToken: "",
+
+					expireTime: 0,
+
+					state: "",
+
+					scope: new Vector.<String>()
+
+			}
+
+		}
+		
+		private function sendProxy():void {
+			
+			googleInfoProxyObj.resultData(result);
+			
+		}
+		
+		
+		// ------------------------ get obj ------------------------
+		
 		private function get urlStringParserObj():URLStringParser {
-
+			
 			return URLStringParser.urlStringParserObj as URLStringParser;
-
+			
+		}
+		
+		private function get googleInfoProxyObj():GoogleInfoProxy {
+			
+			return ModelManager.modelManagerObj.getProxy(ProxyName.GOOGLE_INFO) as GoogleInfoProxy;
+			
 		}
 
 

@@ -14,7 +14,7 @@ package model.db.arm.data {
 	import manager.model.IData;
 	import manager.model.ModelManager;
 
-	import model.db.arm.ArmProxy;
+	import model.db.arm.ArmServerProxy;
 	import model.google.info.GoogleInfoProxy;
 	import model.google.info.data.OAuthInfoData;
 	import model.google.info.data.ProfileInfoData;
@@ -102,9 +102,9 @@ package model.db.arm.data {
 
 		}
 
-		private function get armProxyObj():ArmProxy {
+		private function get armProxyObj():ArmServerProxy {
 
-			return ModelManager.modelManagerObj.getProxy(ProxyName.ARM) as ArmProxy;
+			return ModelManager.modelManagerObj.getProxy(ProxyName.ARM_SERVER) as ArmServerProxy;
 
 		}
 

@@ -1,21 +1,22 @@
 package screen.button.drive {
-
-	import flash.display.MovieClip;
-
+	
 	import abstracts.ButtonAbstract;
-
+	
 	import controller.apps.AppsController;
-
+	
+	import identifier.ButtonName;
 	import identifier.ControllerName;
 	import identifier.FileName;
-
+	
 	import manager.controller.ControllerManager;
 
 	public class CreatePreButton extends ButtonAbstract {
+		
+		private const BUTTON_NAME:String = ButtonName.CREATE_PRE;
 
-		public function CreatePreButton(name:String, button:MovieClip) {
+		public function CreatePreButton() {
 
-			super(name, button);
+			super(BUTTON_NAME);
 
 		}
 

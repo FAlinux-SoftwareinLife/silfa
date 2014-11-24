@@ -2,24 +2,26 @@ package screen.database.tables {
 
 	import flash.display.MovieClip;
 	import flash.text.TextField;
-	
+
 	import abstracts.TableAbstract;
-	
+
 	import identifier.DataName;
 	import identifier.ProxyName;
 	import identifier.TableName;
-	
+
 	import manager.model.ModelManager;
-	
-	import model.db.info.InfoProxy;
+
+	import model.db.info.ArmInfoProxy;
 	import model.db.info.data.ADFInfoData;
 
 	public class FileTable extends TableAbstract {
 
 		private const TABLE_NAME:String = TableName.FILE;
 		private const VALUE_AREA_NAME:String = "valueArea";
-		private const LIST_MAX:uint = 4;		
-		private const DIFFER_HEIGHT:Number = 10;
+		private const LIST_MAX:uint = 4;
+		private const DIFFER_HEIGHT:Number = 23;
+
+		private var _valueArea:MovieClip;
 
 		public function FileTable() {
 
@@ -27,11 +29,16 @@ package screen.database.tables {
 
 		}
 
+		override public function init(tableArea:MovieClip):void {
+
+			super.init(tableArea);
+
+			_valueArea = tableArea.getChildByName(VALUE_AREA_NAME) as MovieClip;
+
+		}
+
 		override public function updateField():void {
-			
-			var _valueArea:MovieClip = tableArea.getChildByName(VALUE_AREA_NAME) as MovieClip;
-			var _listNum:uint = _valueArea.numChildren;
-			
+
 			var _fileValueTextArea:FileValueTextArea = new FileValueTextArea();
 
 			var _fileIdTxt:TextField = _fileValueTextArea.getChildByName("fileIdTxt") as TextField;
@@ -46,23 +53,55 @@ package screen.database.tables {
 			_thumbnailTxt.text = adfInfoDataObj.getThumbnail();
 			_fileTypeTxt.text = adfInfoDataObj.getFileType();
 
-			if(LIST_MAX > _listNum)
-				addFile(_fileValueTextArea);
-			
+			parseList(_fileValueTextArea);
+
+			alignTextArea();
+
 		}
-		
-		private function addFile(textArea:FileValueTextArea):void {
-		
-			
-			
-		
+
+		private function parseList(addTextArea:FileValueTextArea):void {
+
+			var _listNum:uint = _valueArea.numChildren;
+
+			if (LIST_MAX <= _listNum)
+				removeFile();
+
+			addFile(addTextArea);
+
 		}
-		
+
+		private function addFile(addTextArea:FileValueTextArea):void {
+
+			_valueArea.addChild(addTextArea);
+
+		}
+
+		private function removeFile():void {
+
+			_valueArea.removeChildAt(0);
+
+		}
+
+		private function alignTextArea():void {
+
+			var _listNum:uint = _valueArea.numChildren;
+
+			for (var i:uint = 0; i < _listNum; i++) {
+
+				var _subtractNum:uint = i + 1;
+				var _textArea:FileValueTextArea = _valueArea.getChildAt(_listNum - _subtractNum) as FileValueTextArea;
+
+				_textArea.y = (_textArea.height + DIFFER_HEIGHT) * i;
+
+			}
+
+		}
+
 		//===================== obj reference =====================
 
-		private function get infoProxyObj():InfoProxy {
+		private function get infoProxyObj():ArmInfoProxy {
 
-			return ModelManager.modelManagerObj.getProxy(ProxyName.INFO) as InfoProxy;
+			return ModelManager.modelManagerObj.getProxy(ProxyName.ARM_INFO) as ArmInfoProxy;
 
 		}
 

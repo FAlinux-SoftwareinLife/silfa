@@ -6,8 +6,8 @@ package identifier {
 		public static const GOOGLE_INFO:String = "googleInfo";
 		public static const GOOGLE_OAUTH:String = "googleOAuth";
 		
-		public static const ARM:String = "arm";
-		public static const INFO:String = "info";
+		public static const ARM_SERVER:String = "armServer";
+		public static const ARM_INFO:String = "armInfo";
 
 		public function ProxyName() {
 		}

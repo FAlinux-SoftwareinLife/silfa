@@ -1,17 +1,28 @@
 package screen.button {
 
 	import flash.display.MovieClip;
-
+	
+	import abstracts.ButtonAbstract;
+	
 	import frame.ScreenFrame;
-
+	
 	import identifier.ButtonName;
 	import identifier.ScreenName;
-
+	
 	import manager.screen.IScreen;
-
-	import screen.button.arm.*;
-	import screen.button.auth.*;
-	import screen.button.drive.*;
+	
+	import screen.button.arm.DriveFileInfoButton;
+	import screen.button.arm.ProfileInfoButton;
+	import screen.button.auth.LoginButton;
+	import screen.button.auth.RPDriveCalendarButton;
+	import screen.button.auth.RPGmailButton;
+	import screen.button.auth.ValidationTokenButton;
+	import screen.button.drive.CreateDocButton;
+	import screen.button.drive.CreatePreButton;
+	import screen.button.drive.CreateSprButton;
+	import screen.button.drive.GetFileListButton;
+	import screen.button.profile.GetUserProfileButton;
+	import screen.button.profile.LogoutButton;
 
 	/**
 	 *
@@ -26,39 +37,29 @@ package screen.button {
 
 		private const BUTTON_GROUP_LIST:Vector.<Object> = Vector.<Object>([
 
-			{name: ButtonName.AUTH, buttonList: [
+			{name: ButtonName.AUTH, buttonList: Vector.<ButtonAbstract>([
 
-				{name: ButtonName.LOGIN, button: LoginButton},
+					new LoginButton, new RPGmailButton, new RPDriveCalendarButton, new ValidationTokenButton
 
-					{name: ButtonName.RP_GMAIL, button: RPGmailButton},
+					])},
+			
+			{name: ButtonName.PROFILE, buttonList: Vector.<ButtonAbstract>([
+				
+				new GetUserProfileButton, new LogoutButton
+				
+			])},
 
-					{name: ButtonName.RP_DRIVE_CALENDAR, button: RPDriveCalendarButton},
+			{name: ButtonName.DRIVE, buttonList: Vector.<ButtonAbstract>([
 
-					{name: ButtonName.REFRESH_TOKEN, button: RefreshTokenButton},
+					new GetFileListButton, new CreateDocButton, new CreateSprButton, new CreatePreButton
 
-					{name: ButtonName.GET_USER_PROFILE, button: GetUserProfileButton}
+					])},
 
-				]},
+			{name: ButtonName.ARM, buttonList: Vector.<ButtonAbstract>([
 
-			{name: ButtonName.DRIVE, buttonList: [
+					new ProfileInfoButton, new DriveFileInfoButton
 
-				{name: ButtonName.GET_FILE_LIST, button: GetFileListButton},
-
-					{name: ButtonName.CREATE_DOC, button: CreateDocButton},
-
-					{name: ButtonName.CREATE_SPR, button: CreateSprButton},
-
-					{name: ButtonName.CREATE_PRE, button: CreatePreButton}
-
-				]},
-
-			{name: ButtonName.ARM, buttonList: [
-
-				{name: ButtonName.PROFILE_INFO, button: ProfileInfoButton},
-
-					{name: ButtonName.DRIVE_FILE_INFO, button: DriveFileInfoButton}
-
-				]}
+					])}
 
 			]);
 
@@ -91,21 +92,20 @@ package screen.button {
 			for each (var _buttonGroupObj:Object in BUTTON_GROUP_LIST) {
 
 				var _groupName:String = _buttonGroupObj.name as String;
-				var _buttonList:Vector.<Object> = Vector.<Object>(_buttonGroupObj.buttonList);
+				var _buttonList:Vector.<ButtonAbstract> = _buttonGroupObj.buttonList as Vector.<ButtonAbstract>;
 
 				var _groupArea:MovieClip = buttonArea.getChildByName(_groupName + "BtnArea") as MovieClip;
 
-				for each (var _buttonObj:Object in _buttonList) {
+				for each (var _button:ButtonAbstract in _buttonList) {
 
-					var _buttonName:String = _buttonObj.name;
-					var _ButtonClass:Class = _buttonObj.button as Class;
-					var _button:MovieClip = _groupArea.getChildByName(_buttonName + "Btn") as MovieClip;
+					var _buttonArea:MovieClip = _groupArea.getChildByName(_button.name + "Btn") as MovieClip;
 
-					new _ButtonClass(_buttonName, _button);
+					_button.init(_buttonArea);
 
 				}
 
 			}
+
 		}
 
 		public function reset():void {
@@ -120,6 +120,29 @@ package screen.button {
 		}
 
 		public function set view(obj:Object):void {
+
+		}
+
+		public function getButton(buttonName:String):ButtonAbstract {
+
+			var _selButton:ButtonAbstract;
+
+			var _groupNum:uint = BUTTON_GROUP_LIST.length;
+
+			for each (var _buttonGroupObj:Object in BUTTON_GROUP_LIST) {
+
+				var _groupName:String = _buttonGroupObj.name as String;
+				var _buttonList:Vector.<Object> = Vector.<Object>(_buttonGroupObj.buttonList);
+
+				var _groupArea:MovieClip = buttonArea.getChildByName(_groupName + "BtnArea") as MovieClip;
+
+				for each (var _button:ButtonAbstract in _buttonList)
+					if (_button.name == buttonName)
+						_selButton = _button;
+
+			}
+
+			return _selButton;
 
 		}
 

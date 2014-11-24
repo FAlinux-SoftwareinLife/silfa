@@ -1,11 +1,10 @@
 package screen.button.drive {
 	
-	import flash.display.MovieClip;
-	
 	import abstracts.ButtonAbstract;
 	
 	import controller.apps.AppsController;
 	
+	import identifier.ButtonName;
 	import identifier.ControllerName;
 	import identifier.FileName;
 	
@@ -13,9 +12,11 @@ package screen.button.drive {
 
 	public class CreateDocButton extends ButtonAbstract {
 		
-		public function CreateDocButton(name:String, button:MovieClip) {
+		private const BUTTON_NAME:String = ButtonName.CREATE_DOC;
+		
+		public function CreateDocButton() {
 			
-			super(name, button);
+			super(BUTTON_NAME);
 			
 		}
 		

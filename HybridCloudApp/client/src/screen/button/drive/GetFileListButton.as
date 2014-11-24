@@ -1,20 +1,21 @@
 package screen.button.drive {
 	
-	import flash.display.MovieClip;
-
 	import abstracts.ButtonAbstract;
-
+	
 	import controller.apps.AppsController;
-
+	
+	import identifier.ButtonName;
 	import identifier.ControllerName;
-
+	
 	import manager.controller.ControllerManager;
 
 	public class GetFileListButton extends ButtonAbstract {
 		
-		public function GetFileListButton(name:String, button:MovieClip) {
+		private const BUTTON_NAME:String = ButtonName.GET_FILE_LIST;
+		
+		public function GetFileListButton() {
 			
-			super(name, button);
+			super(BUTTON_NAME);
 			
 		}
 

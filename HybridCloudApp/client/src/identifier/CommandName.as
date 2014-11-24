@@ -3,9 +3,11 @@ package identifier {
 	public class CommandName {
 		
 		public static const WEB_LOGIN:String = "webLogin";
+		public static const WEB_LOGOUT:String = "webLogout";
 		public static const WEB_RP_GMAIL:String = "webRPGmail";
 		public static const WEB_RP_DRIVE_CALENDAR:String = "webRPDriveCalendar";
 		public static const WEB_END_POINT:String = "webEndPoint";
+		public static const VALIDATION:String = "webEndPoint";
 		
 		public static const INFO:String = "info";
 		

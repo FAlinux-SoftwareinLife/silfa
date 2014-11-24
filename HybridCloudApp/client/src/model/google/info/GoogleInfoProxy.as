@@ -1,12 +1,15 @@
 package model.google.info {
 
 	import abstracts.ModelProxyAbstract;
-
+	
+	import events.OAuthEvent;
+	
+	import identifier.DataName;
 	import identifier.ProxyName;
-
+	
 	import manager.model.IData;
 	import manager.model.IModel;
-
+	
 	import model.google.info.data.DriveListInfoData;
 	import model.google.info.data.OAuthInfoData;
 	import model.google.info.data.ProfileInfoData;
@@ -39,6 +42,17 @@ package model.google.info {
 		}
 
 		public function resultData(result:Object):void {
+			
+			switch (result.type) {
+				
+				case DataName.OAUTH_INFO:
+					
+					dispatchEvent(new OAuthEvent(OAuthEvent.SET_LOGIN_COMPLETE, result));
+					
+					break;
+				
+			}
+			
 		}
 
 		public function setData(dataObj:Object):void {

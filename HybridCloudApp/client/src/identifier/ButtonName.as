@@ -7,9 +7,13 @@ package identifier {
 		public static const LOGIN:String = "login";
 		public static const RP_GMAIL:String = "rpGmail";
 		public static const RP_DRIVE_CALENDAR:String = "rpDriveCalendar";
-		public static const REFRESH_TOKEN:String = "refreshToken";
-		public static const GET_USER_PROFILE:String = "getUserProfile";
+		public static const VALIDATION_TOKEN:String = "validationToken";
 		
+		
+		public static const PROFILE:String = "profile";
+		
+		public static const GET_USER_PROFILE:String = "getUserProfile";
+		public static const LOGOUT:String = "logout";
 		
 		public static const DRIVE:String = "drive";
 		

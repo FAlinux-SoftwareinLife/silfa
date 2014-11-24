@@ -1,25 +1,26 @@
-package screen.button.auth {
-
-	import flash.display.MovieClip;
+package screen.button.profile {
 
 	import abstracts.ButtonAbstract;
 
 	import controller.apps.AppsController;
 
+	import identifier.ButtonName;
 	import identifier.ControllerName;
 
 	import manager.controller.ControllerManager;
 
 	public class GetUserProfileButton extends ButtonAbstract {
 
-		public function GetUserProfileButton(name:String, button:MovieClip) {
+		private const BUTTON_NAME:String = ButtonName.GET_USER_PROFILE;
 
-			super(name, button);
+		public function GetUserProfileButton() {
+
+			super(BUTTON_NAME);
 
 		}
 
 		override protected function mouseDownHandler():void {
-			
+
 			var _executeObj:Object = {type: name};
 
 			appsControllerObj.setExecute(_executeObj);

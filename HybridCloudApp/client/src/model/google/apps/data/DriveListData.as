@@ -18,8 +18,6 @@ package model.google.apps.data {
 	import model.google.info.GoogleInfoProxy;
 	import model.google.info.data.OAuthInfoData;
 
-	import utils.Tracer;
-
 	public class DriveListData extends AppsDataAbstract implements IData {
 
 		private const DATA_NAME:String = DataName.DRIVE_LIST;

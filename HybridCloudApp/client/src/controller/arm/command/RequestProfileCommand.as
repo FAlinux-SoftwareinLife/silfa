@@ -1,24 +1,30 @@
 package controller.arm.command {
 
+	import abstracts.CommandAbstract;
+
 	import events.ArmEvent;
-	
+
 	import identifier.CommandName;
 	import identifier.DataName;
+	import identifier.GuideName;
 	import identifier.ProxyName;
 	import identifier.ScreenName;
 	import identifier.TableName;
-	
+
 	import manager.controller.ICommand;
 	import manager.model.ModelManager;
 	import manager.screen.ScreenManager;
-	
-	import model.db.arm.ArmProxy;
-	import model.db.info.InfoProxy;
-	
+
+	import model.db.arm.ArmServerProxy;
+	import model.db.info.ArmInfoProxy;
+
 	import screen.database.DatabaseMediator;
-	import screen.database.tables.ProfileTable;
-	
-	public class RequestProfileCommand implements ICommand {
+	import screen.loading.LoadingMediator;
+	import screen.log.LogMediator;
+
+	import utils.Tracer;
+
+	public class RequestProfileCommand extends CommandAbstract implements ICommand {
 
 		private static const COMMAND_NAME:String = CommandName.REQUEST_PROFILE;
 
@@ -32,8 +38,34 @@ package controller.arm.command {
 
 		public function execute(obj:Object = null):void {
 
-			armProxyObj.addEventListener(ArmEvent.RECEIVE_PROFILE_COMPLETE, receiveProfileComplete);
-			armProxyObj.requestData(DataName.RECEIVE_PROFILE);
+			// tracking
+			logMediatorObj.log("Request data for arm server /  profile info");
+
+			loadingMediatorObj.openLoading();
+
+			checkRequirement(COMMAND_NAME);
+		}
+
+		override protected function requestExecute(executeOpen:Boolean):void {
+
+			if (executeOpen) {
+
+				armProxyObj.addEventListener(ArmEvent.RECEIVE_PROFILE_COMPLETE, receiveProfileComplete);
+				armProxyObj.requestData(DataName.RECEIVE_PROFILE);
+
+			} else {
+
+				setGuide(GuideName.PROFILE);
+
+			}
+
+		}
+
+		override protected function setGuide(guideType:String):void {
+
+			super.setGuide(guideType);
+
+			loadingMediatorObj.closeLoading();
 
 		}
 
@@ -41,23 +73,31 @@ package controller.arm.command {
 
 			armProxyObj.removeEventListener(ArmEvent.RECEIVE_PROFILE_COMPLETE, receiveProfileComplete);
 
-			var _dataObj:Object = {name:DataName.ARM_PROFILE_INFO, data:evt.param};
-			
+			loadingMediatorObj.closeLoading();
+
+			var _dataObj:Object = {name: DataName.ARM_PROFILE_INFO, data: evt.param};
+
 			infoProxyObj.setData(_dataObj);
 
-			profileTableObj.updateField();
+			databaseMediatorObj.setTable(TableName.PROFILE);
+
+			// tracking
+			logMediatorObj.log("Complete receive data");
+			logMediatorObj.log(Tracer.log(_dataObj.data));
 
 		}
 
-		private function get armProxyObj():ArmProxy {
+		// ------------------------ get obj ------------------------
 
-			return ModelManager.modelManagerObj.getProxy(ProxyName.ARM) as ArmProxy;
+		private function get armProxyObj():ArmServerProxy {
+
+			return ModelManager.modelManagerObj.getProxy(ProxyName.ARM_SERVER) as ArmServerProxy;
 
 		}
 
-		private function get infoProxyObj():InfoProxy {
+		private function get infoProxyObj():ArmInfoProxy {
 
-			return ModelManager.modelManagerObj.getProxy(ProxyName.INFO) as InfoProxy;
+			return ModelManager.modelManagerObj.getProxy(ProxyName.ARM_INFO) as ArmInfoProxy;
 
 		}
 
@@ -67,9 +107,15 @@ package controller.arm.command {
 
 		}
 
-		private function get profileTableObj():ProfileTable {
+		private function get loadingMediatorObj():LoadingMediator {
 
-			return databaseMediatorObj.getTable(TableName.PROFILE) as ProfileTable;
+			return ScreenManager.screenManagerObj.getMediator(ScreenName.LOADING) as LoadingMediator;
+
+		}
+
+		private function get logMediatorObj():LogMediator {
+
+			return ScreenManager.screenManagerObj.getMediator(ScreenName.LOG) as LogMediator;
 
 		}
 

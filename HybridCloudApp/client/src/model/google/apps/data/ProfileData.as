@@ -60,10 +60,6 @@ package model.google.apps.data {
 
 			_loader = new URLLoader(_request);
 			_loader.addEventListener(Event.COMPLETE, loaderComplete);
-			trace("_token = " + _token);
-			trace("_header = " + _header);
-			trace("_header.name = " + _header.name);
-			trace("_header.value = " + _header.value);
 
 		}
 

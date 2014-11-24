@@ -16,9 +16,9 @@ package model.db.arm {
 	import model.db.arm.data.ReceiveProfileData;
 
 
-	public class ArmProxy extends ModelProxyAbstract implements IModel {
+	public class ArmServerProxy extends ModelProxyAbstract implements IModel {
 
-		private const MODEL_NAME:String = ProxyName.ARM;
+		private const MODEL_NAME:String = ProxyName.ARM_SERVER;
 
 		private const ARM_DATA_LIST:Vector.<Object> = Vector.<Object>([
 
@@ -26,7 +26,7 @@ package model.db.arm {
 
 			]);
 
-		public function ArmProxy() {
+		public function ArmServerProxy() {
 		}
 
 		public function get name():String {
