@@ -10,7 +10,7 @@ package {
 
 	import screen.ScreenBase;
 
-	[SWF(frameRate = "64", width = "1300", height = "995", backgroundColor = "0xFFFFFF", pageTitle = "Hybrid Cloud Module")]
+	[SWF(frameRate = "64", width = "1300", height = "860", backgroundColor = "0xFFFFFF", pageTitle = "Hybrid Cloud Module")]
 	public class HybridCloudModule extends Sprite {
 
 		public function HybridCloudModule() {

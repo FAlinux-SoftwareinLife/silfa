@@ -1,6 +1,6 @@
 package screen.measure {
 	
-	import abstracts.ApplicationAbstract;
+	import abstracts.MeasureAbstract;
 	
 	import frame.ScreenFrame;
 	
@@ -8,16 +8,15 @@ package screen.measure {
 	
 	import manager.screen.IScreen;
 	
-	import screen.application.drive.DriveApplication;
-	import screen.application.profile.ProfileApplication;
+	import screen.measure.connectivity.ConnectivityMeasure;
 
 	public class MeasureMediator extends ScreenFrame implements IScreen {
 		
 		private const SCREEN_NAME:String = ScreenName.MEASURE;
 		
-		private const MEASURE_LIST:Vector.<ApplicationAbstract> = Vector.<ApplicationAbstract>([
+		private const MEASURE_LIST:Vector.<MeasureAbstract> = Vector.<MeasureAbstract>([
 			
-			new ProfileApplication, new DriveApplication
+			new ConnectivityMeasure
 			
 		]);
 		

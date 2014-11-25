@@ -4,6 +4,8 @@ package model.db.info.data {
 
 	import manager.model.IData;
 
+	import utils.Tracer;
+
 	public class APInfoData implements IData {
 
 		private const DATA_NAME:String = DataName.ARM_PROFILE_INFO;

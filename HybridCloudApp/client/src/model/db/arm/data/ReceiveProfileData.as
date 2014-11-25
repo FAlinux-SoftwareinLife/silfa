@@ -66,8 +66,8 @@ package model.db.arm.data {
 
 			var _data:Object = JSON.parse(evt.target.data);
 
-			result.data = _data.data;
-			Tracer.log(result.data);
+			result.data = _data;
+			
 			sendProxy();
 
 		}
