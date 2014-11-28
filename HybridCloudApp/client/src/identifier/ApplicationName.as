@@ -7,6 +7,7 @@ package identifier {
 		public static const DOC:String = "doc";
 		public static const SPREAD:String = "spread";
 		public static const PRESENT:String = "present";
+		public static const MEASURE:String = "measure";
 		
 		public function ApplicationName() {
 		}		

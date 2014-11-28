@@ -11,6 +11,7 @@ package model.db.arm {
 	import manager.model.IModel;
 	
 	import model.db.arm.data.InsertDriveFileData;
+	import model.db.arm.data.InsertMeasureData;
 	import model.db.arm.data.InsertProfileData;
 	import model.db.arm.data.ReceiveDriveFileData;
 	import model.db.arm.data.ReceiveProfileData;
@@ -22,7 +23,7 @@ package model.db.arm {
 
 		private const ARM_DATA_LIST:Vector.<Object> = Vector.<Object>([
 
-			new InsertProfileData, new ReceiveProfileData, new InsertDriveFileData, new ReceiveDriveFileData
+			new InsertProfileData, new ReceiveProfileData, new InsertDriveFileData, new ReceiveDriveFileData, new InsertMeasureData
 
 			]);
 
@@ -47,7 +48,7 @@ package model.db.arm {
 
 				case DataName.INSERT_PROFILE:
 
-					dispatchEvent(new ArmEvent(ArmEvent.INSERT_PROFILE_COMPLETE));
+					dispatchEvent(new ArmEvent(ArmEvent.INSERT_PROFILE_COMPLETE, result.data));
 
 					break;
 
@@ -56,17 +57,29 @@ package model.db.arm {
 					dispatchEvent(new ArmEvent(ArmEvent.RECEIVE_PROFILE_COMPLETE, result.data));
 
 					break;
-				
+
 				case DataName.INSERT_DRIVE_FILE:
-					
-					dispatchEvent(new ArmEvent(ArmEvent.INSERT_DRIVE_FILE_COMPLETE));
-					
+
+					dispatchEvent(new ArmEvent(ArmEvent.INSERT_DRIVE_FILE_COMPLETE, result.data));
+
 					break;
-				
+
 				case DataName.RECEIVE_DRIVE_FILE:
-					
+
 					dispatchEvent(new ArmEvent(ArmEvent.RECEIVE_DRIVE_FILE_COMPLETE, result.data));
-					
+
+					break;
+
+				case DataName.INSERT_MEASURE:
+
+					dispatchEvent(new ArmEvent(ArmEvent.INSERT_MEASURE_COMPLETE, result.data));
+
+					break;
+
+				case DataName.RECEIVE_MEASURE:
+
+					dispatchEvent(new ArmEvent(ArmEvent.RECEIVE_MEASURE_COMPLETE, result.data));
+
 					break;
 
 			}
@@ -74,6 +87,11 @@ package model.db.arm {
 		}
 
 		public function setData(dataObj:Object):void {
+			
+			for each (var _data:IData in ARM_DATA_LIST)
+				if (dataObj.name == _data.name)
+					_data.parseData(dataObj.data);
+				
 		}
 
 		public function getData(name:String):IData {

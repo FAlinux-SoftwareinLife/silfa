@@ -8,6 +8,8 @@ package events {
 		public static const RECEIVE_PROFILE_COMPLETE:String = "receiveProfileComplete";
 		public static const INSERT_DRIVE_FILE_COMPLETE:String = "insertDriveFileComplete";
 		public static const RECEIVE_DRIVE_FILE_COMPLETE:String = "receiveDriveFileComplete";
+		public static const INSERT_MEASURE_COMPLETE:String = "insertMeasureComplete";
+		public static const RECEIVE_MEASURE_COMPLETE:String = "receiveMeasureComplete";
 		
 		public function ArmEvent(type:String, paramObj:Object = null, bubbles:Boolean = false, cancelable:Boolean = false) {
 			

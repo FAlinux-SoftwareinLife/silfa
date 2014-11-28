@@ -1,6 +1,8 @@
 package model.db.arm.data {
 
 	import flash.events.Event;
+	import flash.events.HTTPStatusEvent;
+	import flash.events.IOErrorEvent;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import flash.net.URLRequestMethod;
@@ -64,6 +66,23 @@ package model.db.arm.data {
 
 			_loader = new URLLoader(_request);
 			_loader.addEventListener(Event.COMPLETE, loadComplete);
+			_loader.addEventListener(HTTPStatusEvent.HTTP_STATUS, httpStatusHandler);
+			_loader.addEventListener(IOErrorEvent.IO_ERROR, errorHandler);
+
+		}
+
+		private function httpStatusHandler(evt:HTTPStatusEvent):void {
+
+			trace("status = " + evt.status);
+
+		}
+
+		private function errorHandler(evt:IOErrorEvent):void {
+
+			trace("errorID = " + evt.errorID);
+			result.data = evt.errorID;
+
+			sendProxy();
 
 		}
 
@@ -77,20 +96,21 @@ package model.db.arm.data {
 
 		private function sendProxy():void {
 
-			armProxyObj.resultData(result);
+			armServerProxyObj.resultData(result);
 
 		}
 
 		public function parseData(data:Object):void {
 		}
 
-		private function get armProxyObj():ArmServerProxy {
+		//===================== obj reference =====================
+
+
+		private function get armServerProxyObj():ArmServerProxy {
 
 			return ModelManager.modelManagerObj.getProxy(ProxyName.ARM_SERVER) as ArmServerProxy;
 
 		}
-
-		//===================== obj reference =====================
 
 		private function get googleInfoProxyObj():GoogleInfoProxy {
 

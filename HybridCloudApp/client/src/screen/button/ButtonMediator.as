@@ -1,16 +1,16 @@
 package screen.button {
 
 	import flash.display.MovieClip;
-	
+
 	import abstracts.ButtonAbstract;
-	
+
 	import frame.ScreenFrame;
-	
+
 	import identifier.ButtonName;
 	import identifier.ScreenName;
-	
+
 	import manager.screen.IScreen;
-	
+
 	import screen.button.arm.DriveFileInfoButton;
 	import screen.button.arm.ProfileInfoButton;
 	import screen.button.auth.LoginButton;
@@ -42,12 +42,12 @@ package screen.button {
 					new LoginButton, new RPGmailButton, new RPDriveCalendarButton, new ValidationTokenButton
 
 					])},
-			
+
 			{name: ButtonName.PROFILE, buttonList: Vector.<ButtonAbstract>([
-				
-				new GetUserProfileButton, new LogoutButton
-				
-			])},
+
+					new GetUserProfileButton, new LogoutButton
+
+					])},
 
 			{name: ButtonName.DRIVE, buttonList: Vector.<ButtonAbstract>([
 
@@ -57,7 +57,7 @@ package screen.button {
 
 			{name: ButtonName.ARM, buttonList: Vector.<ButtonAbstract>([
 
-					new ProfileInfoButton, new DriveFileInfoButton
+					new ProfileInfoButton, new DriveFileInfoButton //, new MeasureButton
 
 					])}
 

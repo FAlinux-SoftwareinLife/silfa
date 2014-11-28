@@ -9,6 +9,7 @@ package screen.log.top {
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.system.Capabilities;
 	import flash.text.TextField;
 
 	import abstracts.LogAbstract;
@@ -25,6 +26,7 @@ package screen.log.top {
 		private const LOG_TEXT_DIFFERH:Number = 10;
 		private const WINDOW_DIFFERX:Number = 20;
 		private const WINDOW_WIDTH:Number = 500;
+		private const WINDOW_HEIGHT:Number = Capabilities.screenResolutionY - 100;
 		private const OPEN_TEXT:String = "OPEN LOG POPUP";
 		private const CLOSE_TEXT:String = "CLOSE LOG POPUP";
 
@@ -179,6 +181,7 @@ package screen.log.top {
 			var _nativeWindow:NativeWindow = logArea.stage.nativeWindow as NativeWindow;
 
 			var _initOpt:NativeWindowInitOptions = new NativeWindowInitOptions();
+			_initOpt.minimizable = _initOpt.maximizable = false;
 			_initOpt.resizable = false;
 
 			windowLog = new NativeWindow(_initOpt);
@@ -191,7 +194,7 @@ package screen.log.top {
 			windowLog.x = _nativeWindow.x + _nativeWindow.width + WINDOW_DIFFERX;
 			windowLog.y = _nativeWindow.y;
 			windowLog.width = WINDOW_WIDTH;
-			windowLog.height = _nativeWindow.height;
+			windowLog.height = WINDOW_HEIGHT;
 
 			windowLog.addEventListener(Event.CLOSE, windowLogHandler);
 

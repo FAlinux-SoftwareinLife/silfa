@@ -4,6 +4,8 @@ package model.google.info.data {
 
 	import manager.model.IData;
 
+	import utils.Tracer;
+
 	public dynamic class DriveListInfoData implements IData {
 
 		private static const DATA_NAME:String = DataName.DRIVE_LIST_INFO;
@@ -158,13 +160,34 @@ package model.google.info.data {
 
 		private function replaceModifyDate(modifiedDate:String):String {
 
-			var _replaceDate:String;
-			var _replacePattern:RegExp = /T/gi;
-			var _replaceStr:String = " ";
-			var _cutStr:String = ":";
+			var _date:Date = new Date();
 
-			_replaceDate = modifiedDate.substring(0, modifiedDate.lastIndexOf(_cutStr));
-			_replaceDate = _replaceDate.replace(_replacePattern, _replaceStr);
+			with (modifiedDate) {
+
+				_date.fullYear = substr(0, 4);
+				_date.month = Number(substr(5, 2)) - 1;
+				_date.date = substr(8, 2);
+				_date.hours = Number(substr(11, 2));
+				_date.minutes = substr(14, 2);
+				_date.seconds = substr(17, 2);
+
+			}
+
+			var _offsetMilliseconds:Number = _date.getTimezoneOffset() * 60 * 1000;
+
+			_date.setTime(_date.getTime() - _offsetMilliseconds);
+
+			var _replaceDate:String;
+
+			_replaceDate = String(_date.getFullYear()) + "-" +
+
+				String(_date.getMonth() + 1) + "-" +
+
+				String(_date.getDate()) + " " +
+
+				String(_date.getHours()) + ":" +
+
+				String(_date.getMinutes());
 
 			return _replaceDate;
 
@@ -179,7 +202,7 @@ package model.google.info.data {
 		}
 
 		public function setFileOpen(id:String, b:Boolean):void {
-trace("set file open = " + id, b);
+			
 			for each (var _infoObj:Object in file_list)
 				if (id == _infoObj.id)
 					_infoObj.isOpen = b;

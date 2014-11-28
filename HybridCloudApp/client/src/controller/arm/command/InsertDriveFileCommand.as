@@ -1,11 +1,11 @@
 package controller.arm.command {
 
 	import abstracts.CommandAbstract;
-	
+
 	import controller.arm.ArmController;
-	
+
 	import events.ArmEvent;
-	
+
 	import identifier.ApplicationName;
 	import identifier.CommandName;
 	import identifier.ControllerName;
@@ -13,16 +13,16 @@ package controller.arm.command {
 	import identifier.GuideName;
 	import identifier.ProxyName;
 	import identifier.ScreenName;
-	
+
 	import manager.controller.ControllerManager;
 	import manager.controller.ICommand;
 	import manager.model.ModelManager;
 	import manager.screen.ScreenManager;
-	
+
 	import model.db.arm.ArmServerProxy;
 	import model.google.info.GoogleInfoProxy;
 	import model.google.info.data.DriveListInfoData;
-	
+
 	import screen.application.ApplicationMediator;
 	import screen.loading.LoadingMediator;
 	import screen.log.LogMediator;
@@ -41,7 +41,7 @@ package controller.arm.command {
 		}
 
 		public function execute(obj:Object = null):void {
-			
+
 			// tracking
 			logMediatorObj.log("Request insert data in arm server /  google drive file info");
 
@@ -83,10 +83,36 @@ package controller.arm.command {
 		}
 
 		private function insertDriveFileComplete(evt:ArmEvent):void {
-			
+
+			checkInsertComplete(evt.param);
+
+		}
+
+		private function checkInsertComplete(resultObj:Object):void {
+
+			var _resultNum:int = int(resultObj);
+
+			switch (_resultNum) {
+
+				case 2032:
+
+					failureInsert();
+
+					break;
+
+				default:
+
+					successInsert();
+
+			}
+
+		}
+
+		private function successInsert():void {
+
 			// tracking
 			logMediatorObj.log("Complete insert data");
-			
+
 			armProxyObj.removeEventListener(ArmEvent.INSERT_DRIVE_FILE_COMPLETE, insertDriveFileComplete);
 
 			loadingMediatorObj.closeLoading();
@@ -94,6 +120,15 @@ package controller.arm.command {
 			var _executeObj:Object = {type: CommandName.REQUEST_DRIVE_FILE};
 
 			armControllerObj.setExecute(_executeObj);
+
+		}
+
+		private function failureInsert():void {
+
+			// tracking
+			logMediatorObj.log("Failure - Check the Arm Server");
+
+			loadingMediatorObj.closeLoading();
 
 		}
 
@@ -135,11 +170,11 @@ package controller.arm.command {
 			return googleInfoProxyObj.getData(DataName.DRIVE_LIST_INFO) as DriveListInfoData;
 
 		}
-		
+
 		private function get logMediatorObj():LogMediator {
-			
+
 			return ScreenManager.screenManagerObj.getMediator(ScreenName.LOG) as LogMediator;
-			
+
 		}
 
 

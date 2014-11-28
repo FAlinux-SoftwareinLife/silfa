@@ -1,6 +1,8 @@
 package model.db.arm.data {
 
 	import flash.events.Event;
+	import flash.events.HTTPStatusEvent;
+	import flash.events.IOErrorEvent;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import flash.net.URLRequestMethod;
@@ -64,10 +66,16 @@ package model.db.arm.data {
 
 			_loader = new URLLoader(_request);
 			_loader.addEventListener(Event.COMPLETE, loadComplete);
+			_loader.addEventListener(IOErrorEvent.IO_ERROR, errorHandler);
 
 		}
 
-		public function parseData(data:Object):void {
+		private function errorHandler(evt:IOErrorEvent):void {
+
+			result.data = evt.errorID;
+
+			sendProxy();
+
 		}
 
 		private function loadComplete(evt:Event):void {
@@ -83,6 +91,12 @@ package model.db.arm.data {
 			armProxyObj.resultData(result);
 
 		}
+
+		public function parseData(data:Object):void {
+		}
+
+		//===================== obj reference =====================
+
 
 		private function get googleInfoProxyObj():GoogleInfoProxy {
 

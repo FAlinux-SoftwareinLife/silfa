@@ -70,6 +70,32 @@ package controller.arm.command {
 
 		private function insertProfileComplete(evt:ArmEvent):void {
 
+			checkInsertComplete(evt.param);
+
+		}
+
+		private function checkInsertComplete(resultObj:Object):void {
+
+			var _resultNum:int = int(resultObj);
+
+			switch (_resultNum) {
+
+				case 2032:
+
+					failureInsert();
+
+					break;
+
+				default:
+
+					successInsert();
+
+			}
+
+		}
+
+		private function successInsert():void {
+
 			// tracking
 			logMediatorObj.log("Complete insert data");
 
@@ -80,6 +106,15 @@ package controller.arm.command {
 			var _executeObj:Object = {type: CommandName.REQUEST_PROFILE};
 
 			armControllerObj.setExecute(_executeObj);
+
+		}
+
+		private function failureInsert():void {
+
+			// tracking
+			logMediatorObj.log("Failure - Check the Arm Server");
+
+			loadingMediatorObj.closeLoading();
 
 		}
 

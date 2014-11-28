@@ -1,6 +1,7 @@
 package controller.arm {
 
 	import controller.arm.command.InsertDriveFileCommand;
+	import controller.arm.command.InsertMeasureCommand;
 	import controller.arm.command.InsertProfileCommand;
 	import controller.arm.command.RequestDriveFileCommand;
 	import controller.arm.command.RequestProfileCommand;
@@ -10,6 +11,7 @@ package controller.arm {
 	
 	import manager.controller.ICommand;
 	import manager.controller.IController;
+	import controller.arm.command.RequestMeasureCommand;
 
 	public class ArmController implements IController {
 
@@ -17,7 +19,7 @@ package controller.arm {
 		
 		private const ARM_COMMAND_LIST:Vector.<ICommand> = Vector.<ICommand>([
 			
-			new InsertProfileCommand, new InsertDriveFileCommand, new RequestProfileCommand, new RequestDriveFileCommand
+			new InsertProfileCommand, new InsertDriveFileCommand, new RequestProfileCommand, new RequestDriveFileCommand, new InsertMeasureCommand, new RequestMeasureCommand
 			
 		]);
 		
@@ -56,6 +58,18 @@ package controller.arm {
 				case "requestDriveFile" :
 					
 					getCommand(CommandName.REQUEST_DRIVE_FILE).execute();
+					
+					break;
+				
+				case "insertMeasure" :
+					
+					getCommand(CommandName.INSERT_MEASURE).execute(executeObj.param);
+					
+					break;
+				
+				case "receiveMeasure" :
+					
+					getCommand(CommandName.REQUEST_MEASURE).execute(executeObj.param);
 					
 					break;
 			

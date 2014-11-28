@@ -4,6 +4,7 @@ package controller.apps {
 	import controller.apps.command.CreateDriveFileCommand;
 	import controller.apps.command.DriveFileTrashCommand;
 	import controller.apps.command.DriveListCommand;
+	import controller.apps.command.MeasureCommand;
 	import controller.apps.command.ProfileCommand;
 
 	import identifier.CommandName;
@@ -18,7 +19,7 @@ package controller.apps {
 
 		private const APP_COMMAND_LIST:Vector.<ICommand> = Vector.<ICommand>([
 
-			new ProfileCommand, new DriveListCommand, new DriveFileTrashCommand, new CreateDriveFileCommand
+			new ProfileCommand, new DriveListCommand, new DriveFileTrashCommand, new CreateDriveFileCommand, new MeasureCommand
 
 			]);
 
@@ -58,8 +59,14 @@ package controller.apps {
 				case "createDoc":
 				case "createSpr":
 				case "createPre":
-					
+
 					getCommand(CommandName.CREATE_DRIVE_FILE).execute(executeObj.param);
+
+					break;
+
+				case "measure":
+
+					getCommand(CommandName.MEASURE).execute();
 
 					break;
 

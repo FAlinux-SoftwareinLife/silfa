@@ -25,6 +25,8 @@ package identifier {
 		public static const RECEIVE_PROFILE:String = "receiveProfile";
 		public static const INSERT_DRIVE_FILE:String = "insertDriveFile";
 		public static const RECEIVE_DRIVE_FILE:String = "receiveDriveFile";
+		public static const INSERT_MEASURE:String = "insertMeasure";
+		public static const RECEIVE_MEASURE:String = "receiveMeasure";
 		
 		public static const ARM_PROFILE_INFO:String = "armProfileInfo";
 		public static const ARM_DRIVE_FILE_INFO:String = "armDriveFileInfo";

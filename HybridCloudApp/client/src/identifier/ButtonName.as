@@ -27,6 +27,7 @@ package identifier {
 		
 		public static const PROFILE_INFO:String = "profileInfo";
 		public static const DRIVE_FILE_INFO:String = "driveFileInfo";
+		public static const MEASURE:String = "measure";
 		
 		public function ButtonName() {
 		}

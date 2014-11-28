@@ -13,6 +13,7 @@ package screen.application {
 	import manager.screen.IScreen;
 
 	import screen.application.drive.DriveApplication;
+	import screen.application.measure.MeasureApplication;
 	import screen.application.profile.ProfileApplication;
 
 	/**
@@ -25,7 +26,7 @@ package screen.application {
 
 		private const APPLICATION_LIST:Vector.<ApplicationAbstract> = Vector.<ApplicationAbstract>([
 
-			new ProfileApplication, new DriveApplication
+			new ProfileApplication, new DriveApplication // new MeasureApplication
 
 			]);
 
@@ -75,7 +76,7 @@ package screen.application {
 			nextApp = appName;
 
 			//if (currentApp != appName)
-				currentApp != null ? exit() : start();
+			currentApp != null ? exit() : start();
 
 		}
 

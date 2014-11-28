@@ -13,6 +13,8 @@ package controller.web.command {
 	import manager.model.ModelManager;
 	import manager.screen.ScreenManager;
 
+	import model.google.info.GoogleInfoProxy;
+	import model.google.info.data.OAuthInfoData;
 	import model.google.oauth.GoogleOAuthProxy;
 
 	import screen.guide.GuideMediator;
@@ -49,7 +51,7 @@ package controller.web.command {
 
 			// tracking
 			logMediatorObj.log("Request OAuth Validation");
-			
+
 			googleOAuthProxyObj.addEventListener(OAuthEvent.REQUEST_OAUTH_VALIDATION_COMPLETE, requestValidationComplete);
 			googleOAuthProxyObj.requestData(DataName.OAUTH_VALIDATION);
 
@@ -80,6 +82,7 @@ package controller.web.command {
 
 					// tracking
 					logMediatorObj.log(Tracer.log(_resultObj));
+					logMediatorObj.log("access_token = " + oauthInfoDataObj.getAccessToken());
 
 			}
 
@@ -93,6 +96,18 @@ package controller.web.command {
 		private function get googleOAuthProxyObj():GoogleOAuthProxy {
 
 			return ModelManager.modelManagerObj.getProxy(ProxyName.GOOGLE_OAUTH) as GoogleOAuthProxy;
+
+		}
+
+		private function get googleInfoProxyObj():GoogleInfoProxy {
+
+			return ModelManager.modelManagerObj.getProxy(ProxyName.GOOGLE_INFO) as GoogleInfoProxy;
+
+		}
+
+		private function get oauthInfoDataObj():OAuthInfoData {
+
+			return googleInfoProxyObj.getData(DataName.OAUTH_INFO) as OAuthInfoData;
 
 		}
 

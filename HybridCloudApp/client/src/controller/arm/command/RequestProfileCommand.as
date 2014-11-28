@@ -44,6 +44,7 @@ package controller.arm.command {
 			loadingMediatorObj.openLoading();
 
 			checkRequirement(COMMAND_NAME);
+			
 		}
 
 		override protected function requestExecute(executeOpen:Boolean):void {
@@ -70,22 +71,58 @@ package controller.arm.command {
 		}
 
 		private function receiveProfileComplete(evt:ArmEvent):void {
+			
+			checkInsertComplete(evt.param);
 
+		}
+		
+		private function checkInsertComplete(resultObj:Object):void {
+			
+			var _resultNum:int = int(resultObj);
+			
+			switch (_resultNum) {
+				
+				case 2032:
+					
+					failureInsert();
+					
+					break;
+				
+				default:
+					
+					successInsert(resultObj);
+					
+			}
+			
+		}
+		
+		private function successInsert(dataObj:Object):void {
+			
 			armProxyObj.removeEventListener(ArmEvent.RECEIVE_PROFILE_COMPLETE, receiveProfileComplete);
-
+			
 			loadingMediatorObj.closeLoading();
-
-			var _dataObj:Object = {name: DataName.ARM_PROFILE_INFO, data: evt.param};
-
+			
+			var _dataObj:Object = {name: DataName.ARM_PROFILE_INFO, data: dataObj};
+			
 			infoProxyObj.setData(_dataObj);
-
+			
 			databaseMediatorObj.setTable(TableName.PROFILE);
-
+			
 			// tracking
 			logMediatorObj.log("Complete receive data");
 			logMediatorObj.log(Tracer.log(_dataObj.data));
-
+			
 		}
+		
+		private function failureInsert():void {
+			
+			// tracking
+			logMediatorObj.log("Failure - Check the Arm Server");
+			
+			loadingMediatorObj.closeLoading();
+			
+		}
+
 
 		// ------------------------ get obj ------------------------
 

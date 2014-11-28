@@ -1,6 +1,8 @@
 package model.google.apps.data {
 
 	import flash.events.Event;
+	import flash.events.HTTPStatusEvent;
+	import flash.events.IOErrorEvent;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import flash.net.URLRequestHeader;
@@ -26,7 +28,8 @@ package model.google.apps.data {
 		private const CORPUS:String = "DEFAULT";
 		private const PAGE_TOKEN:String = "";
 		private const PROJECTION:String = "BASIC";
-		private const QUERY:String = "trashed = false";
+		private const QUERY:String = "trashed = false"
+		//private const QUERY:String = "'ttfcaptain@gmail.com' in owners and trashed = false"
 		//private const QUERY:String = "title contains 'test' and trashed = false";
 
 		private var result:Object;
@@ -77,10 +80,24 @@ package model.google.apps.data {
 
 			_loader = new URLLoader(_request);
 			_loader.addEventListener(Event.COMPLETE, loaderComplete);
+			_loader.addEventListener(HTTPStatusEvent.HTTP_STATUS, httpStatusHandler);
+			_loader.addEventListener(IOErrorEvent.IO_ERROR, errorHandler);
 
 		}
 
-		public function parseData(data:Object):void {
+		private function httpStatusHandler(evt:HTTPStatusEvent):void {
+
+			trace(evt.status);
+
+		}
+
+		private function errorHandler(evt:IOErrorEvent):void {
+			trace(evt.errorID);
+			result.data = evt.errorID;
+
+
+			sendProxy();
+
 		}
 
 		private function loaderComplete(evt:Event):void {
@@ -96,6 +113,13 @@ package model.google.apps.data {
 			googleAppsProxyObj.resultData(result);
 
 		}
+
+		public function parseData(data:Object):void {
+		}
+
+
+		//===================== obj reference =====================
+
 
 		private function get oauthInfoDataObj():OAuthInfoData {
 

@@ -15,11 +15,14 @@ package identifier {
 		public static const DRIVE_LIST:String = "driveList";
 		public static const DRIVE_FILE_TRASH:String = "driveFileTrash";
 		public static const CREATE_DRIVE_FILE:String = "createDriveFile";
+		public static const MEASURE:String = "measure";
 		
 		public static const INSERT_PROFILE:String = "insertProfile";		
 		public static const INSERT_DRIVE_FILE:String = "insertDriveFile";
+		public static const INSERT_MEASURE:String = "insertMeasure";
 		public static const REQUEST_PROFILE:String = "requestProfile";
 		public static const REQUEST_DRIVE_FILE:String = "requestDriveFile";
+		public static const REQUEST_MEASURE:String = "requestMeasure";
 		
 		public function CommandName() {
 		}
