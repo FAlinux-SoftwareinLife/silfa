@@ -216,7 +216,7 @@ static int abortboot_normal(int bootdelay)
 	printf(CONFIG_MENUPROMPT);
 #else
 
-#ifdef CONFIG_IMX6_NADIA
+#ifdef CONFIG_NADIA
 
         //falinux added
         rsw = get_rotary_switch_value();
@@ -466,7 +466,7 @@ static void process_boot_delay(void)
 				run_command_list(s, -1, 0);
 				printf(" boot cmd retry ... %d\n", i+1);
 			}
-#ifdef CONFIG_IMX6_NADIA
+#ifdef CONFIG__NADIA
 
 			// FIXME board boot fail..
 			// buzzer.... 

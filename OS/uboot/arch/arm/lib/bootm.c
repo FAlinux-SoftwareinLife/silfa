@@ -79,7 +79,8 @@ static void announce_and_cleanup(int fake)
 	printf("\nStarting kernel ...%s\n\n", fake ?
 		"(fake run for tracing)" : "");
 
-#ifdef CONFIG_IMX6_NADIA
+#ifdef CONFIG_NADIA
+//falinux
 	make_wave( 2000, 100 );
 	set_front_led( 1 , 1 );
 #endif
