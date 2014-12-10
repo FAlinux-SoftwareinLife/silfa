@@ -231,12 +231,7 @@ package screen.application.drive {
 				case BUTTON.DOWN:
 
 					navigateToURL(new URLRequest(_btn.openURL));
-					/*
-					webMediatorObj.view = {name: ViewName.LOGIN, url:_btn.openURL};
 					
-					webMediatorObj.openWebView = {name: ViewName.LOGIN, height: 800};
-					*/
-
 					break;
 
 				case BUTTON.TRASH:
