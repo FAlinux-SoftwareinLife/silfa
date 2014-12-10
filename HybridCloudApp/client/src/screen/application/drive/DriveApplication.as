@@ -81,8 +81,6 @@ package screen.application.drive {
 			driveFileInfoList = driveListInfoDataObj.getFileList() as Vector.<Object>;
 			driveFile_num = driveFileInfoList.length;
 
-			//drvie file 없을 경우 체크
-
 			var _addList:Array = new Array();
 
 			for (var i:uint = 0; i < driveFile_num; i++)
@@ -157,7 +155,7 @@ package screen.application.drive {
 					} else {
 
 						_driveFile.ty = _prevDriveFile.ty + _prevDriveFile.titleArea.y + _prevDriveFile.titleArea.height + FILE_DIFFER_HEIGHT;
-							//_driveFile.y = _prevDriveFile.y + _prevDriveFile.titleArea.y + _prevDriveFile.titleArea.height + FILE_DIFFER_HEIGHT;
+
 					}
 
 				} else {
@@ -405,8 +403,6 @@ package screen.application.drive {
 				_deleteDriveFile.x = _deleteTX;
 				_deleteDriveFile.y = _deleteTY;
 
-//				TweenNano.to(_deleteDriveFile, 1, {y: _deleteDriveFile.y + _deleteDriveFile.height, scaleY: 0, onComplete: removeComplete, onCompleteParams: [_deleteDriveFile]});
-
 			}
 
 			refreshFileName();
@@ -473,8 +469,6 @@ package screen.application.drive {
 			appArea.alpha = 1;
 
 			startMotionComplete();
-
-			//TweenNano.to(appArea, 1, {alpha: 1, onComplete: startMotionComplete});
 
 		}
 
