@@ -3,8 +3,8 @@ package info {
 	public class GoogleClientInfo {
 
 		public static const RESPONSE_TYPE:String = "token";
-		public static const CLIENT_ID:String = "584043853239-9ln3a7lteu6ha06mmoppd62i1oan7ag5.apps.googleusercontent.com";
-		public static const REDIRECT_URI:String = "http://localhost/google/redirect_page.php";
+		public static const CLIENT_ID:String = "clientid";
+		public static const REDIRECT_URI:String = "redirectpage";
 		public static const STATE:String = "login";
 		public static const APPROVAL_PROMPT:String = "auto";
 		public static const LOGIN_HINT:String = "user";
