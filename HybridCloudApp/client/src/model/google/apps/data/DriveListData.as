@@ -29,8 +29,6 @@ package model.google.apps.data {
 		private const PAGE_TOKEN:String = "";
 		private const PROJECTION:String = "BASIC";
 		private const QUERY:String = "trashed = false"
-		//private const QUERY:String = "'ttfcaptain@gmail.com' in owners and trashed = false"
-		//private const QUERY:String = "title contains 'test' and trashed = false";
 
 		private var result:Object;
 
