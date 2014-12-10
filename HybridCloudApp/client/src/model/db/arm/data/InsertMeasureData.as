@@ -64,18 +64,6 @@ package model.db.arm.data {
 		private function insertMeasureData():void {
 
 			var _insertNum:uint = insertData.num;
-
-			for (var i:uint = 0; i < _insertNum; i++) {
-				
-				//var _checkObj:Object = {name: "loader" + String(i), loader: _loader, time: 0};
-				//checkObj.push(_checkObj);				
-				
-				//_loader.load();
-				
-				
-
-			}
-			
 			var _loader:URLLoader;
 			var _request:URLRequest;
 			var _variables:URLVariables;
@@ -89,24 +77,10 @@ package model.db.arm.data {
 			
 			_loader = new URLLoader(_request);
 			_loader.addEventListener(Event.COMPLETE, loadComplete);
-			trace("start");
-			//startDelay = getTimer();
 
 		}
 
 		private function loadComplete(evt:Event):void {
-			trace("end");
-			/*
-			var _loader:URLLoader = evt.currentTarget as URLLoader;
-			var _insertNum:uint = insertData.num;
-
-			setCheckData(_loader);
-
-			insertCheck_num++;
-
-			if (insertCheck_num == _insertNum)
-				checkComplete();
-			*/
 
 		}
 
