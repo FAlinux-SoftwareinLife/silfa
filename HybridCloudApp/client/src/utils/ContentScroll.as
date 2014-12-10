@@ -72,8 +72,6 @@ package utils {
 
 		private function removeScroll():void {
 
-			//scrollBar.stage.removeEventListener(MouseEvent.MOUSE_WHEEL, scrollBarMouseHandler);
-
 			conArea.removeEventListener(Event.ENTER_FRAME, enterHandler);
 
 		}
@@ -167,19 +165,6 @@ package utils {
 					downOpen = false;
 
 					break;
-
-				case MouseEvent.MOUSE_OVER:
-
-					//TweenNano.to(scrollBar, 0.6, {x: scrollBarOldX - 20, ease: Back.easeOut});
-
-					break;
-
-				case MouseEvent.MOUSE_OUT:
-
-					//TweenNano.to(scrollBar, 0.6, {x: scrollBarOldX, ease: Sine.easeOut});
-
-					break;
-
 			}
 
 		}
